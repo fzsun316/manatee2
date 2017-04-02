@@ -1,0 +1,42 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "referralSource",
+            "otherEntityName": "referralSource",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "medicalReferralID",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "age",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "conditionDesciption",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "priority",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "deadline",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "changelogDate": "20170402144004",
+    "entityTableName": "patient",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no"
+}

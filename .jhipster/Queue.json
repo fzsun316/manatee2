@@ -1,0 +1,36 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "patient",
+            "otherEntityName": "patient",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "team",
+            "otherEntityName": "team",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "timestampInitial",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "timestampFinal",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "changelogDate": "20170402144003",
+    "entityTableName": "queue",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no"
+}

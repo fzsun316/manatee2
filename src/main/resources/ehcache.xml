@@ -20,5 +20,15 @@
 
     <cache alias="com.fangzhou.manatee.domain.User.persistentTokens" uses-template="simple"/>
 
+    <cache alias="com.fangzhou.manatee.domain.Staff" uses-template="simple"/>
+
+    <cache alias="com.fangzhou.manatee.domain.Team" uses-template="simple"/>
+
+    <cache alias="com.fangzhou.manatee.domain.ReferralSource" uses-template="simple"/>
+
+    <cache alias="com.fangzhou.manatee.domain.Queue" uses-template="simple"/>
+
+    <cache alias="com.fangzhou.manatee.domain.Patient" uses-template="simple"/>
+
     <!-- jhipster-needle-ehcache-add-entry -->
 </config>

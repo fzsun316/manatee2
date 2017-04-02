@@ -15,6 +15,11 @@
                     templateUrl: 'app/layouts/navbar/navbar.html',
                     controller: 'NavbarController',
                     controllerAs: 'vm'
+                },
+                'statusbar@': {
+                    templateUrl: 'app/layouts/statusbar/statusbar.html',
+                    controller: 'StatusbarController',
+                    controllerAs: 'vm'
                 }
             },
             resolve: {

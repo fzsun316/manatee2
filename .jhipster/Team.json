@@ -1,0 +1,27 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "organization",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "specialty",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "maxPatients",
+            "fieldType": "Long"
+        }
+    ],
+    "changelogDate": "20170402144001",
+    "entityTableName": "team",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no"
+}

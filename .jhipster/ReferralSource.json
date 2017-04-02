@@ -1,0 +1,19 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "contact",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170402144002",
+    "entityTableName": "referral_source",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no"
+}

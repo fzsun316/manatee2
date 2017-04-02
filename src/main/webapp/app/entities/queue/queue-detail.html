@@ -1,0 +1,39 @@
+
+<div>
+    <h2><span>Queue</span> {{vm.queue.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Status</span></dt>
+        <dd>
+            <span>{{vm.queue.status}}</span>
+        </dd>
+        <dt><span>Timestamp Initial</span></dt>
+        <dd>
+            <span>{{vm.queue.timestampInitial | date:'medium'}}</span>
+        </dd>
+        <dt><span>Timestamp Final</span></dt>
+        <dd>
+            <span>{{vm.queue.timestampFinal | date:'medium'}}</span>
+        </dd>
+        <dt><span>Patient</span></dt>
+        <dd>
+            <a ui-sref="patient-detail({id:vm.queue.patient.id})">{{vm.queue.patient.id}}</a>
+        </dd>
+        <dt><span>Team</span></dt>
+        <dd>
+            <a ui-sref="team-detail({id:vm.queue.team.id})">{{vm.queue.team.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="queue-detail.edit({id:vm.queue.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+</div>

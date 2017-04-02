@@ -1,0 +1,35 @@
+
+<div>
+    <h2><span>Team</span> {{vm.team.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Organization</span></dt>
+        <dd>
+            <span>{{vm.team.organization}}</span>
+        </dd>
+        <dt><span>Name</span></dt>
+        <dd>
+            <span>{{vm.team.name}}</span>
+        </dd>
+        <dt><span>Specialty</span></dt>
+        <dd>
+            <span>{{vm.team.specialty}}</span>
+        </dd>
+        <dt><span>Max Patients</span></dt>
+        <dd>
+            <span>{{vm.team.maxPatients}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="team-detail.edit({id:vm.team.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+</div>

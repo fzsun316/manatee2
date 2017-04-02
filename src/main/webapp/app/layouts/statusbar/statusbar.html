@@ -1,0 +1,17 @@
+<div class="statusbar ">
+    <div class="control-button">
+        <div class="title">
+            STATUS:
+        </div>
+        <button class="navigation-btn normal" style="float:left;">
+            <span class="glyphicon glyphicon-signal"></span> <span>Connected</span>
+        </button>
+        <button ng:class="{true:'navigation-btn active', false:'navigation-btn normal'}[isRefreshing==true]" style="float:left;">
+            <!-- <span class="glyphicon glyphicon-refresh"></span> <span>In SYNC</span> -->
+            <span ng:class="{true:'glyphicon glyphicon-refresh', false:'glyphicon glyphicon-transfer'}[isRefreshing==true]"></span> <span>{{isRefreshing ? 'Refreshing' : 'In Sync'}}</span>
+        </button>
+        <div class="right-title" style="right: 20px;">
+            Manatee Traffic Control | Version: 0.2.0
+        </div>
+    </div>
+</div>
