@@ -64,7 +64,6 @@
         }
 
         $scope.loadAll = function() {
-
             var arrayTeam = [];
             var arrayPatientTeam = [];
             var arrayPotentialDischargedPatient = [];
@@ -78,15 +77,15 @@
                     return it;
                 });
                 map_team_admission_count_today = generate_table_data(audits);
-
-
                 Team.query(function(result) {
                     for (var i in result) {
                         if (typeof result[i] === "object")
                             if ('name' in result[i]) {
                                 var tmp_team_admission_count_today = map_team_admission_count_today['progressbartoday-' + result[i]['id']];
-                                if (tmp_team_admission_count_today== null)
+                                if (tmp_team_admission_count_today== null) {
+                                    // console.log("tmp_team_admission_count_today== null");
                                     tmp_team_admission_count_today = 0;
+                                } 
                                 arrayTeam.push({
                                     'id': result[i]['id'],
                                     'name': result[i]['name'],
@@ -428,9 +427,9 @@
                         var entityType = audits[i]['entityType'];
                         var action = audits[i]['action'];
                         if (entityType == "com.fangzhou.manatee.domain.Queue") {
-
-                            if (entityValue['status']!== null && entityValue['status']!== "potentialdischarge") {
-                                // console.log(entityValue['status']);
+                            // console.log(entityValue['status']);
+                            if (entityValue['status']!== "potentialdischarge") {
+                            // if (entityValue['status']!== null && entityValue['status']!== "potentialdischarge") {
                                 var patient = entityValue['patient'];
                                 var team = entityValue['team'];
                                 var teamId = "progressbartoday-" + team['id'].toString();
