@@ -26,6 +26,31 @@
             resolve: {
             }
         })
+        .state('queue.history', {
+            parent: 'queue',
+            url: '/{id}/edit',
+            data: {
+                authorities: ['ROLE_USER']
+            },
+            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                $uibModal.open({
+                    templateUrl: 'app/entities/queue/queue-history-dialog.html',
+                    controller: 'QueueHistoryDialogController',
+                    controllerAs: 'vm',
+                    backdrop: 'static',
+                    size: 'lg',
+                    resolve: {
+                        entity: ['Queue', function(Queue) {
+                            return Queue.get({id : $stateParams.id});
+                        }]
+                    }
+                }).result.then(function() {
+                    $state.go('queue', null, { reload: true });
+                }, function() {
+                    $state.go('^');
+                });
+            }]
+        })
         .state('queue-detail', {
             parent: 'entity',
             url: '/queue/{id}',
@@ -42,42 +67,9 @@
             },
             resolve: {
                 entity: ['$stateParams', 'Queue', function($stateParams, Queue) {
-                    return Queue.get({id : $stateParams.id}).$promise;
-                }],
-                previousState: ["$state", function ($state) {
-                    var currentStateData = {
-                        name: $state.current.name || 'queue',
-                        params: $state.params,
-                        url: $state.href($state.current.name, $state.params)
-                    };
-                    return currentStateData;
+                    return Queue.get({id : $stateParams.id});
                 }]
             }
-        })
-        .state('queue-detail.edit', {
-            parent: 'queue-detail',
-            url: '/detail/edit',
-            data: {
-                authorities: ['ROLE_USER']
-            },
-            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
-                $uibModal.open({
-                    templateUrl: 'app/entities/queue/queue-dialog.html',
-                    controller: 'QueueDialogController',
-                    controllerAs: 'vm',
-                    backdrop: 'static',
-                    size: 'lg',
-                    resolve: {
-                        entity: ['Queue', function(Queue) {
-                            return Queue.get({id : $stateParams.id}).$promise;
-                        }]
-                    }
-                }).result.then(function() {
-                    $state.go('^', {}, { reload: false });
-                }, function() {
-                    $state.go('^');
-                });
-            }]
         })
         .state('queue.new', {
             parent: 'queue',
@@ -103,7 +95,7 @@
                         }
                     }
                 }).result.then(function() {
-                    $state.go('queue', null, { reload: 'queue' });
+                    $state.go('queue', null, { reload: true });
                 }, function() {
                     $state.go('queue');
                 });
@@ -124,11 +116,35 @@
                     size: 'lg',
                     resolve: {
                         entity: ['Queue', function(Queue) {
-                            return Queue.get({id : $stateParams.id}).$promise;
+                            return Queue.get({id : $stateParams.id});
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('queue', null, { reload: 'queue' });
+                    $state.go('queue', null, { reload: true });
+                }, function() {
+                    $state.go('^');
+                });
+            }]
+        })
+        .state('queue.myedit', {
+            parent: 'queue',
+            url: '/{id}/delete',
+            data: {
+                authorities: ['ROLE_USER']
+            },
+            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                $uibModal.open({
+                    templateUrl: 'app/entities/queue/queue-dialog.html',
+                    controller: 'QueueDialogController',
+                    controllerAs: 'vm',
+                    size: 'md',
+                    resolve: {
+                        entity: ['Queue', function(Queue) {
+                            return Queue.get({id : $stateParams.id});
+                        }]
+                    }
+                }).result.then(function() {
+                    $state.go('queue', null, { reload: true });
                 }, function() {
                     $state.go('^');
                 });
@@ -148,11 +164,70 @@
                     size: 'md',
                     resolve: {
                         entity: ['Queue', function(Queue) {
-                            return Queue.get({id : $stateParams.id}).$promise;
+                            return Queue.get({id : $stateParams.id});
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('queue', null, { reload: 'queue' });
+                    $state.go('queue', null, { reload: true });
+                }, function() {
+                    $state.go('^');
+                });
+            }]
+        })
+        .state('queue.newpatient', {
+            parent: 'queue',
+            url: '/newpatient',
+            data: {
+                authorities: ['ROLE_USER']
+            },
+            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                $uibModal.open({
+                    templateUrl: 'app/entities/queue/queue-patient-dialog.html',
+                    controller: 'QueuePatientDialogController',
+                    controllerAs: 'vm',
+                    backdrop: 'static',
+                    size: 'lg',
+                    resolve: {
+                        entity: function () {
+                            return {
+                                name: null,
+                                medicalReferralId: null,
+                                age: null,
+                                conditionDesciption: null,
+                                priority: null,
+                                deadline: null,
+                                id: null
+                            };
+                        }
+                    }
+                }).result.then(function() {
+                    // $state.go('queue', null, { reload: true });
+                    $state.go('queue', null, { reload: true });
+                }, function() {
+                    $state.go('queue');
+                });
+            }]
+        })
+        .state('queue.patientedit', {
+            parent: 'queue',
+            url: '/{id}/editpatient',
+            data: {
+                authorities: ['ROLE_USER']
+            },
+            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                $uibModal.open({
+                    templateUrl: 'app/entities/patient/patient-dialog.html',
+                    controller: 'PatientDialogController',
+                    controllerAs: 'vm',
+                    backdrop: 'static',
+                    size: 'lg',
+                    resolve: {
+                        entity: ['Patient', function(Patient) {
+                            return Patient.get({id : $stateParams.id});
+                        }]
+                    }
+                }).result.then(function() {
+                    $state.go('patient', null, { reload: true });
                 }, function() {
                     $state.go('^');
                 });

@@ -12,7 +12,8 @@
         var service = {
             findAllAudited: findAllAudited,
             findByEntity: findByEntity,
-            getPrevVersion: getPrevVersion
+            getPrevVersion: getPrevVersion,
+            findByCurrentDay: findByCurrentDay
         };
 
         return service;
@@ -28,6 +29,17 @@
                 params: {
                     entityType: entityType,
                     limit: limit
+                }
+            }).then(function (response) {
+                return response.data;
+            });
+        }
+
+        // manatee custom service
+        function findByCurrentDay(entityType) {
+            return $http.get('api/audits/entity/changesSameDay', {
+                params: {
+                    entityType: entityType
                 }
             }).then(function (response) {
                 return response.data;

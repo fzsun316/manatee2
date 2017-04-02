@@ -25,6 +25,10 @@ import java.net.URISyntaxException;
 import java.util.List;
 import javax.transaction.Transactional;
 
+import java.time.ZonedDateTime;
+import java.time.ZoneId;
+import java.time.LocalDateTime;
+
 /**
  * REST controller for getting the audit events for entity
  */
@@ -70,6 +74,27 @@ public class EntityAuditResource {
         Page<EntityAuditEvent> page = entityAuditEventRepository.findAllByEntityType(entityType, pageRequest);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/audits/entity/changes");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+
+    }
+
+    /**
+     * fetches the change list for an entity class in the current day
+     *
+     * @return
+     */
+    @RequestMapping(value = "/audits/entity/changesSameDay",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
+    public List<EntityAuditEvent> getChangesSameDay(@RequestParam(value = "entityType") String entityType)
+        throws URISyntaxException {
+        log.debug("REST request to get EntityAuditEvents of the current day");
+        LocalDateTime localtDateAndTime = LocalDateTime.now();
+        ZoneId zoneId = ZoneId.of("America/Chicago");
+        ZonedDateTime datetimeInNashville  = ZonedDateTime.of(localtDateAndTime, zoneId);
+        ZonedDateTime zdt = ZonedDateTime.of(datetimeInNashville.getYear(), datetimeInNashville.getMonthValue(), datetimeInNashville.getDayOfMonth(), 0, 0, 0, 0, zoneId);
+        return entityAuditEventRepository.findAllByCurrentDay(zdt, entityType);
 
     }
 
