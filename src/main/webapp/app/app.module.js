@@ -13,8 +13,12 @@
             'ui.bootstrap.datetimepicker',
             'ui.router',
             'infinite-scroll',
+            'ds.objectDiff',
             // jhipster-needle-angularjs-add-module JHipster will add new module here
-            'angular-loading-bar'
+            'angular-loading-bar',
+            'gridster',
+            'datatables',
+            'datatables.buttons'
         ])
         .run(run);
 

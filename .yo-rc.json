@@ -24,5 +24,8 @@
     ],
     "jhiPrefix": "jhi",
     "enableTranslation": false
+  },
+  "generator-jhipster-entity-audit": {
+    "auditFramework": "custom"
   }
 }
