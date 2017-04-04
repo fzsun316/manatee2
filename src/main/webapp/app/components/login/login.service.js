@@ -31,6 +31,9 @@
                 resetModal,
                 resetModal
             );
+            // modalInstance.result.then(function() {
+            //         $state.go('queue', null, { reload: true});
+            // });
         }
     }
 })();

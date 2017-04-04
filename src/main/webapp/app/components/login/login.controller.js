@@ -53,7 +53,8 @@
                 if (Auth.getPreviousState()) {
                     var previousState = Auth.getPreviousState();
                     Auth.resetPreviousState();
-                    $state.go(previousState.name, previousState.params);
+                    // $state.go(previousState.name, previousState.params);
+                    $state.go('queue', null, { reload: true});
                 }
             }).catch(function () {
                 vm.authenticationError = true;
