@@ -13,6 +13,16 @@ html, body {
     position: relative;
 }
 
+.jh-entity-details {
+    font-size: 90%;
+}
+.jh-table {
+    font-size: 90%;
+}
+.btn span {
+    font-size: 90%;
+}
+
 .statusbar {
     background-color: #000;
     position:fixed;
@@ -7616,11 +7626,11 @@ button.close {
 /* customized */
 table.dataTable thead tr th {
     text-align: center;
-    font-size: 70%;
+    font-size: 80%;
 }
 table.dataTable tbody tr td {
     text-align: center;
-    font-size: 70%;
+    font-size: 80%;
     height: 15px;
 }
 /* -- select box --*/

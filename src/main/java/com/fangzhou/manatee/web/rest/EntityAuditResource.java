@@ -51,7 +51,7 @@ public class EntityAuditResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(AuthoritiesConstants.USER)
     public List<String> getAuditedEntities() {
         return entityAuditEventRepository.findAllEntityTypes();
     }
@@ -65,7 +65,7 @@ public class EntityAuditResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<List<EntityAuditEvent>> getChanges(@RequestParam(value = "entityType") String entityType,
                                                              @RequestParam(value = "limit") int limit)
         throws URISyntaxException {
@@ -86,7 +86,7 @@ public class EntityAuditResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(AuthoritiesConstants.USER)
     public List<EntityAuditEvent> getChangesSameDay(@RequestParam(value = "entityType") String entityType)
         throws URISyntaxException {
         log.debug("REST request to get EntityAuditEvents of the current day");
@@ -107,7 +107,7 @@ public class EntityAuditResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<EntityAuditEvent> getPrevVersion(@RequestParam(value = "qualifiedName") String qualifiedName,
                                                            @RequestParam(value = "entityId") Long entityId,
                                                            @RequestParam(value = "commitVersion") Integer commitVersion)

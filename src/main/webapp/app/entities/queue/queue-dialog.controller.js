@@ -5,9 +5,9 @@
         .module('manateeApp')
         .controller('QueueDialogController', QueueDialogController);
 
-    QueueDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Queue', 'Patient', 'Team'];
+    QueueDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Queue', 'Patient', 'Team', 'ChatService'];
 
-    function QueueDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Queue, Patient, Team) {
+    function QueueDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Queue, Patient, Team, ChatService) {
         var vm = this;
 
         vm.queue = entity;
@@ -39,6 +39,7 @@
             $scope.$emit('manateeApp:queueUpdate', result);
             $uibModalInstance.close(result);
             vm.isSaving = false;
+            ChatService.send("send test message");
         }
 
         function onSaveError () {
