@@ -16,19 +16,48 @@
                     var entityValue = audits[i]['entityValue'];
                     var entityType = audits[i]['entityType'];
                     var action = audits[i]['action'];
-                    if (entityType=="com.fangzhou.manatee.domain.Queue") {
+                    if (entityType == "com.fangzhou.manatee.domain.Queue") {
                         var patient = entityValue['patient'];
-                        var team = entityValue['team'];
+                        var team = entityValue['team'];                        
                         var teamBefore = "";
-                        var utcDate = entityValue['lastModifiedDate'];  // ISO-8601 formatted date returned from server
+                        var utcDate = entityValue['lastModifiedDate']; // ISO-8601 formatted date returned from server
                         var localDate = new Date(utcDate);
                         if (patient['id'] in tmp_patient_team) {
                             teamBefore = tmp_patient_team[patient['id']]['name'];
                         }
-                        var tmp_one_record = {'patientId': patient['id'], 'patientName': patient['name'], 'lastModifiedDate': localDate.toString(), 'lastModifiedBy': entityValue['lastModifiedBy'], 'teamBefore': teamBefore, 'teamAfter': team['name']}
+                        var weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+                        var dayOfWeek = weekday[localDate.getDay()];
+                        var modifiedDate = (localDate.getMonth() + 1) + '/' + localDate.getDate() + '/' + localDate.getFullYear() + ' ' + localDate.getHours() + ':' + localDate.getMinutes();
+                        var dischargeTransfer = "";
+                        var status = entityValue['status'];
+                        if (action=="DELETE") {
+                            dischargeTransfer="Discharge/Transfer";
+                        } else if (action=="UPDATE") {
+                            if (teamBefore==team['name'] && status=="potentialdischarge") {
+                                dischargeTransfer = "Possible Discharge/Transfer";
+                            } else if (teamBefore==team['name'] && status!="potentialdischarge") {
+                                dischargeTransfer = "Recover";
+                            } else {
+                                dischargeTransfer = "Admit";
+                            }
+                        } else if (action=="CREATE") {
+                            dischargeTransfer="Admit";
+                            teamBefore = "";
+                        }
+                        var tmp_one_record = {
+                            'patientId': patient['id'],
+                            'patientName': patient['name'],
+                            'lastModifiedDate': localDate.toString(),
+                            'lastModifiedBy': entityValue['lastModifiedBy'],
+                            'teamBefore': teamBefore,
+                            'teamAfter': team['name'],
+                            'dayOfWeek': dayOfWeek,
+                            'modifiedDate': modifiedDate,
+                            'dischargeTransfer': dischargeTransfer
+                        }
                         tmp_patient_team[patient['id']] = team;
                         // console.log(tmp_one_record)
-                        if (patient['id']===entity['id']) {
+                        if (patient['id'] === entity['id']) {
                             array_records.push(tmp_one_record);
                         }
                     }
@@ -48,7 +77,7 @@
         });
         $scope.$on('$destroy', unsubscribe);
 
-         vm.buttons = [{
+        vm.buttons = [{
             extend: "excelHtml5",
             filename: "master_log",
             title: "Master Log Report",
@@ -102,11 +131,14 @@
             // DTColumnBuilder.newColumn('patientName').withTitle('Patient Name'),
             DTColumnBuilder.newColumn('teamBefore').withTitle('Before'),
             DTColumnBuilder.newColumn('teamAfter').withTitle('After'),
+            DTColumnBuilder.newColumn('dischargeTransfer').withTitle('Discharge/Transfer'),
+            DTColumnBuilder.newColumn('dayOfWeek').withTitle('Day of Week'),
+            DTColumnBuilder.newColumn('modifiedDate').withTitle('Time'),
             DTColumnBuilder.newColumn('lastModifiedDate').withTitle('Timestamp'),
             DTColumnBuilder.newColumn('lastModifiedBy').withTitle('User')
             // .notVisible()
         ];
 
-       
+
     }
 })();

@@ -64,7 +64,6 @@
         }
 
         $scope.loadAll = function() {
-            console.log("----------------- $scope.loadAll = function() -----------------");
             var arrayTeam = [];
             var arrayPatientTeam = [];
             var arrayPotentialDischargedPatient = [];

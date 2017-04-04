@@ -1,14 +1,18 @@
 
 <div>
-    <h2><span>Patient</span> {{vm.patient.id}}</h2>
-    <hr>
+    <div class="content-header">
+    <div class="title">
+    Patient Detail
+    </div>
+    </div>
+    <br/>
     <jhi-alert-error></jhi-alert-error>
     <dl class="dl-horizontal jh-entity-details">
         <dt><span>Name</span></dt>
         <dd>
             <span>{{vm.patient.name}}</span>
         </dd>
-        <dt><span>Medical Referral ID</span></dt>
+        <dt><span>MRN</span></dt>
         <dd>
             <span>{{vm.patient.medicalReferralID}}</span>
         </dd>
@@ -16,7 +20,7 @@
         <dd>
             <span>{{vm.patient.age}}</span>
         </dd>
-        <dt><span>Condition Desciption</span></dt>
+        <dt><span>Condition</span></dt>
         <dd>
             <span>{{vm.patient.conditionDesciption}}</span>
         </dd>

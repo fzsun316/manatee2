@@ -116,14 +116,14 @@
                           <table class="table queue-table"  ng-switch on="teams[$index].name">
                             <thead>
                               <tr>
-                                <th style="width:30%;text-align: center;font-weight: normal;height: 24px;line-height: 24px ;padding: 0px;">MRID</th>
+                                <th style="width:30%;text-align: center;font-weight: normal;height: 24px;line-height: 24px ;padding: 0px;">MRN</th>
                                 <th style="width:70%;text-align: center;font-weight: normal; height: 24px;line-height: 24px ;padding: 0px;">Name</th>
                                 <!-- <th style="">Edit</th> -->
                               </tr>
                             </thead>
                             <tbody  id={{teams[$index].id}} class="connectedSortable" style="">
                                 <tr style="" ng-repeat="patientItem in arrayPatientTeam[$index]" id={{patientItem.id}} ng-switch on="teams[$index].name" ng-class="{0:'default', 1:'grayout'}[patientItem.status]">
-                                    <td style="">{{patientItem.patient.medicalReferralId}}</td>
+                                    <td style="">{{patientItem.patient.medicalReferralID}}</td>
                                     <td style="" id="name"><a ui-sref="patient-detail({id:patientItem.id})">{{patientItem.patient.name}}</a></td>
                                     <!-- <td style=""><a ui-sref="queue.patientedit({id:patientItem.id})">Edit</a></td> -->
                                 </tr>
