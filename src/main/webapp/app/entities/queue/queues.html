@@ -50,7 +50,7 @@
                 <tr ng-repeat="potentialDischargedPatient in arrayPotentialDischargedPatient" id="potentialdischarge-tr">
                     <td style="width: 2%" ><button type="submit"
                                 ng-click="recoverFromPotentialDischarge(potentialDischargedPatient.id)"><span class="glyphicon glyphicon-circle-arrow-left"></span></button></td>
-                    <td style="width: 10%" >{{potentialDischargedPatient.patient.medicalReferralId}}</td>
+                    <td style="width: 10%" >{{potentialDischargedPatient.patient.medicalReferralID}}</td>
                     <td style="width: 10%">{{potentialDischargedPatient.patient.name}}</td>
                     <td style="width: 2%"><button type="submit"
                                 ng-click="removeFromPotentialDischarge(potentialDischargedPatient.id)"><span class="glyphicon glyphicon-log-in"></span></button></td>

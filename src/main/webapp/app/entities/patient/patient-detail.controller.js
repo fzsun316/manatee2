@@ -27,7 +27,7 @@
                         }
                         var weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
                         var dayOfWeek = weekday[localDate.getDay()];
-                        var modifiedDate = (localDate.getMonth() + 1) + '/' + localDate.getDate() + '/' + localDate.getFullYear() + ' ' + localDate.getHours() + ':' + localDate.getMinutes();
+                        var modifiedDate = (localDate.getMonth() + 1) + '/' + localDate.getDate() + '/' + localDate.getFullYear() + ' ' + localDate.getHours() + ':' + (localDate.getMinutes()<10?'0':'') + localDate.getMinutes();
                         var dischargeTransfer = "";
                         var status = entityValue['status'];
                         if (action=="DELETE") {
@@ -38,10 +38,10 @@
                             } else if (teamBefore==team['name'] && status!="potentialdischarge") {
                                 dischargeTransfer = "Recover";
                             } else {
-                                dischargeTransfer = "Admit";
+                                dischargeTransfer = "";
                             }
                         } else if (action=="CREATE") {
-                            dischargeTransfer="Admit";
+                            dischargeTransfer="";
                             teamBefore = "";
                         }
                         var tmp_one_record = {

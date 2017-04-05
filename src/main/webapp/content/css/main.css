@@ -14,10 +14,18 @@ html, body {
 }
 
 .jh-entity-details {
+    text-align: center;
     font-size: 90%;
 }
 .jh-table {
+    text-align: center;
     font-size: 90%;
+}
+.jh-table thead tr th {
+    text-align: center;
+}
+.jh-table tbody tr td {
+    text-align: center;
 }
 .btn span {
     font-size: 90%;

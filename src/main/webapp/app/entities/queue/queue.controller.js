@@ -82,10 +82,10 @@
                         if (typeof result[i] === "object")
                             if ('name' in result[i]) {
                                 var tmp_team_admission_count_today = map_team_admission_count_today['progressbartoday-' + result[i]['id']];
-                                if (tmp_team_admission_count_today== null) {
+                                if (tmp_team_admission_count_today == null) {
                                     // console.log("tmp_team_admission_count_today== null");
                                     tmp_team_admission_count_today = 0;
-                                } 
+                                }
                                 arrayTeam.push({
                                     'id': result[i]['id'],
                                     'name': result[i]['name'],
@@ -420,6 +420,7 @@
 
         function generate_table_data(audits) {
             var tmp_team_count = {};
+            var tmp_patient_team = {};
             for (var i in audits) {
                 if (typeof audits[i] === "object")
                     if ('id' in audits[i]) {
@@ -428,9 +429,28 @@
                         var action = audits[i]['action'];
                         if (entityType == "com.fangzhou.manatee.domain.Queue") {
                             // console.log(entityValue['status']);
-                            if (entityValue['status']!== "potentialdischarge") {
-                            // if (entityValue['status']!== null && entityValue['status']!== "potentialdischarge") {
-                                var patient = entityValue['patient'];
+                            var teamBefore = "";
+                            var status = entityValue['status'];
+                            var team = entityValue['team'];  
+                            var flag_admission = false;
+                            var patient = entityValue['patient'];
+                            if (patient['id'] in tmp_patient_team) {
+                                teamBefore = tmp_patient_team[patient['id']]['name'];
+                            }
+                            
+                            if (action=="DELETE") {
+                            } else if (action=="UPDATE") {
+                                if (teamBefore==team['name'] && status=="potentialdischarge") {
+                                } else if (teamBefore==team['name'] && status!="potentialdischarge") {
+                                } else {
+                                    flag_admission = true;
+                                }
+                            } else if (action=="CREATE") {
+                                flag_admission = true;
+                                teamBefore = "";
+                            }
+
+                            if (flag_admission) {
                                 var team = entityValue['team'];
                                 var teamId = "progressbartoday-" + team['id'].toString();
                                 if (teamId in tmp_team_count) {
@@ -439,6 +459,8 @@
                                     tmp_team_count[teamId] = 1;
                                 }
                             }
+
+                            tmp_patient_team[patient['id']] = team;
                         }
                     }
             }
