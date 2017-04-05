@@ -430,6 +430,8 @@
                         if (entityType == "com.fangzhou.manatee.domain.Queue") {
                             // console.log(entityValue['status']);
                             var teamBefore = "";
+                            var utcDate = entityValue['lastModifiedDate'];
+                            var localDate = new Date(utcDate);
                             var status = entityValue['status'];
                             var team = entityValue['team'];  
                             var flag_admission = false;
@@ -450,7 +452,7 @@
                                 teamBefore = "";
                             }
 
-                            if (flag_admission) {
+                            if (flag_admission && localDate.getHours()>=8) {
                                 var team = entityValue['team'];
                                 var teamId = "progressbartoday-" + team['id'].toString();
                                 if (teamId in tmp_team_count) {
