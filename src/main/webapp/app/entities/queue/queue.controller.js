@@ -63,7 +63,7 @@
                 return one_team['maxPatients']
         }
 
-        $scope.loadAll = function() {
+        $scope.loadAll = function(flag_reload) {
             var arrayTeam = [];
             var arrayPatientTeam = [];
             var arrayPotentialDischargedPatient = [];
@@ -76,6 +76,7 @@
                     it.entityValue = JSON.parse(it.entityValue);
                     return it;
                 });
+                console.log(audits);
                 map_team_admission_count_today = generate_table_data(audits);
                 Team.query(function(result) {
                     for (var i in result) {
@@ -160,14 +161,16 @@
                         }
                         $scope.teams = arrayTeam;
 
-                        var standardItems = [];
-                        for (var i_team = 0; i_team < arrayPatientTeam.length; i_team++) {
-                            standardItems.push({
-                                row: Math.floor(i_team / 3) * 3,
-                                col: (i_team % 3) * 2
-                            });
+                        if (!flag_reload) {
+                            var standardItems = [];
+                            for (var i_team = 0; i_team < arrayPatientTeam.length; i_team++) {
+                                standardItems.push({
+                                    row: Math.floor(i_team / 3) * 3,
+                                    col: (i_team % 3) * 2
+                                });
+                            }
+                            $scope.standardItems = standardItems;
                         }
-                        $scope.standardItems = standardItems;
                         $scope.arrayPatientTeam = arrayPatientTeam;
                         $scope.arrayPotentialDischargedPatient = arrayPotentialDischargedPatient;
                         $scope.arrayIncomingPatient = arrayIncomingPatient;
@@ -194,7 +197,7 @@
             // $scope.createConnectSortable();
         });
 
-        $scope.loadAll();
+        $scope.loadAll(false);
 
         $scope.createConnectSortable = function() {
             console.log(" $scope.createConnectSortable");
@@ -230,14 +233,14 @@
         ChatService.receive().then(null, null, function(message) {
             console.log("receive test message");
             // refresh_queue_page(false);
-            $scope.loadAll(function(result) {
+            $scope.loadAll(true, function(result) {
                 $scope.activateProgressBar();
                 // $scope.activateTodayProgressBar();
             });
         });
 
         $scope.updateTeam = function(queueID, teamID) {
-            console.log("queueID, teamID:" + queueID + "|" + teamID);
+            // console.log("queueID, teamID:" + queueID + "|" + teamID);
             Queue.get({
                 id: queueID
             }, function(queueResult) {
@@ -419,6 +422,8 @@
         };
 
         function generate_table_data(audits) {
+            // console.log("      ---- audits ----");
+            // console.log(audits);
             var tmp_team_count = {};
             var tmp_patient_team = {};
             for (var i in audits) {
@@ -433,26 +438,24 @@
                             var utcDate = entityValue['lastModifiedDate'];
                             var localDate = new Date(utcDate);
                             var status = entityValue['status'];
-                            var team = entityValue['team'];  
+                            var team = entityValue['team'];
                             var flag_admission = false;
                             var patient = entityValue['patient'];
                             if (patient['id'] in tmp_patient_team) {
                                 teamBefore = tmp_patient_team[patient['id']]['name'];
                             }
-                            
-                            if (action=="DELETE") {
-                            } else if (action=="UPDATE") {
-                                if (teamBefore==team['name'] && status=="potentialdischarge") {
-                                } else if (teamBefore==team['name'] && status!="potentialdischarge") {
-                                } else {
+
+                            if (action == "DELETE") {} else if (action == "UPDATE") {
+                                if (teamBefore == team['name'] && status == "potentialdischarge") {} else if (teamBefore == team['name'] && status != "potentialdischarge") {} else {
                                     flag_admission = true;
                                 }
-                            } else if (action=="CREATE") {
+                            } else if (action == "CREATE") {
                                 flag_admission = true;
                                 teamBefore = "";
                             }
-
-                            if (flag_admission && localDate.getHours()>=8) {
+                            // $scope.testtest = localDate.toString()+"|"+localDate.getHours()
+                            // console.log(team['name'] + flag_admission.toString() + localDate.toString()+"|"+ localDate.getHours());
+                            if (flag_admission && localDate.getHours() >= 8) {
                                 var team = entityValue['team'];
                                 var teamId = "progressbartoday-" + team['id'].toString();
                                 if (teamId in tmp_team_count) {
@@ -469,23 +472,23 @@
             return tmp_team_count;
         }
 
-        $scope.getTeamRecordsForToday = function() {
-            console.log("getTeamRecordsForToday");
+        // $scope.getTeamRecordsForToday = function() {
+        //     console.log("getTeamRecordsForToday");
 
-            EntityAuditService.findByCurrentDay("com.fangzhou.manatee.domain.Queue").then(function(data) {
-                var audits = data.map(function(it) {
-                    it.entityValue = JSON.parse(it.entityValue);
-                    return it;
-                });
-                $scope.teamTodayLog = generate_table_data(audits);
-                for (var key in teamTodayLog) {
-                    var value = teamTodayLog[key];
-                    $scope.activateTodayProgressBar(key, value);
-                }
+        //     EntityAuditService.findByCurrentDay("com.fangzhou.manatee.domain.Queue").then(function(data) {
+        //         var audits = data.map(function(it) {
+        //             it.entityValue = JSON.parse(it.entityValue);
+        //             return it;
+        //         });
+        //         $scope.teamTodayLog = generate_table_data(audits);
+        //         for (var key in teamTodayLog) {
+        //             var value = teamTodayLog[key];
+        //             $scope.activateTodayProgressBar(key, value);
+        //         }
 
-            });
+        //     });
 
-        }
+        // }
 
         // $scope.activateTodayProgressBar = function(barID, progressNum) {
         //     intialProgressbar_today('#'+barID, progressNum);
