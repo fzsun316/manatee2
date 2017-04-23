@@ -173,7 +173,10 @@
                         }
                         $scope.arrayPatientTeam = arrayPatientTeam;
                         $scope.arrayPotentialDischargedPatient = arrayPotentialDischargedPatient;
-                        $scope.arrayIncomingPatient = arrayIncomingPatient;
+                        // $scope.arrayIncomingPatient = arrayIncomingPatient;
+
+                        // console.log(arrayPatientTeam);
+                        // console.log(arrayPotentialDischargedPatient);
                         // $scope.createConnectSortable();
 
                         // var myVar = setInterval(myTimer, 3000);
@@ -214,7 +217,7 @@
                         return;
                     }
                     if (teamID == "potentialdischarge") {
-                        ui.sender.sortable("cancel");
+                        // ui.sender.sortable("cancel");
                         // $('#QueueController').scope().updateStatus(id, "potentialdischarge");
                         $scope.updateStatus(id, "potentialdischarge");
                     } else {
@@ -232,7 +235,6 @@
 
         ChatService.receive().then(null, null, function(message) {
             console.log("receive test message");
-            // refresh_queue_page(false);
             $scope.loadAll(true, function(result) {
                 $scope.activateProgressBar();
                 // $scope.activateTodayProgressBar();
@@ -240,7 +242,6 @@
         });
 
         $scope.updateTeam = function(queueID, teamID) {
-            // console.log("queueID, teamID:" + queueID + "|" + teamID);
             Queue.get({
                 id: queueID
             }, function(queueResult) {
@@ -266,6 +267,7 @@
         }
 
         var onSaveFinished = function() {
+            // setTimeout(function() { $scope.addMessage(); }, 2000);
             $scope.addMessage();
             // $scope.createConnectSortable();
         };
@@ -455,7 +457,7 @@
                             }
                             // $scope.testtest = localDate.toString()+"|"+localDate.getHours()
                             // console.log(team['name'] + flag_admission.toString() + localDate.toString()+"|"+ localDate.getHours());
-                            if (flag_admission && localDate.getHours() >= 8) {
+                            if (flag_admission) {
                                 var team = entityValue['team'];
                                 var teamId = "progressbartoday-" + team['id'].toString();
                                 if (teamId in tmp_team_count) {

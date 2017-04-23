@@ -18,7 +18,6 @@
                 </button>
         <!-- {{testtest}} -->
     </div>
-
 <!-- class="glyphicon glyphicon-th" -->
 </div>
 
@@ -126,8 +125,11 @@
                                 <tr style="" ng-repeat="patientItem in arrayPatientTeam[$index]" id={{patientItem.id}} ng-switch on="teams[$index].name" ng-class="{0:'default', 1:'grayout'}[patientItem.status]">
                                     <td style="">{{patientItem.patient.medicalReferralID}}</td>
                                     <td style="" id="name"><a ui-sref="patient-detail({id:patientItem.id})">{{patientItem.patient.name}}</a></td>
-                                    <!-- <td style=""><a ui-sref="queue.patientedit({id:patientItem.id})">Edit</a></td> -->
                                 </tr>
+                                <!-- <tr style="" ng-repeat="patientItem in arrayPatientTeam[$index]" id={{patientItem.id}} ng-switch on="teams[$index].name" ng-class="{0:'default', 1:'grayout'}[patientItem.status]">
+                                    <td style="">{{patientItem.patient.medicalReferralID}}</td>
+                                    <td style="" id="name"><a ui-sref="patient-detail({id:patientItem.id})">{{patientItem.patient.name}}</a></td>
+                                </tr> -->
                                 <tr style="" ng-if="arrayPatientTeam[$index].length==0" id=-1 style="">
                                     <td colspan="2" style="width:100%"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Drag patients here</td>
                                    <!--  <td style=""></td> -->
