@@ -91,16 +91,21 @@ public class EntityAuditResource {
         throws URISyntaxException {
         log.debug("REST request to get EntityAuditEvents of the current day");
         LocalDateTime localtDateAndTime = LocalDateTime.now();
-        // 
         ZoneId zoneId = ZoneId.of("UTC");
         ZoneId zoneId_local = ZoneId.of("America/Chicago");
         ZonedDateTime datetimeInUTC  = ZonedDateTime.of(localtDateAndTime, zoneId);
         ZonedDateTime datetimeInNashville  = datetimeInUTC.withZoneSameInstant(zoneId_local);
-        // ZonedDateTime datetimeInNashville  = ZonedDateTime.of(localtDateAndTime, zoneId);
-        ZonedDateTime zdt = ZonedDateTime.of(datetimeInNashville.getYear(), datetimeInNashville.getMonthValue(), datetimeInNashville.getDayOfMonth(), 0, 0, 0, 0, zoneId);
-        // System.out.println("datetimeInNashville.getDayOfMonth()");
-        // System.out.println(datetimeInNashville.getDayOfMonth());
+        ZonedDateTime zdt = ZonedDateTime.of(datetimeInNashville.getYear(), datetimeInNashville.getMonthValue(), datetimeInNashville.getDayOfMonth(), 8, 0, 0, 0, zoneId_local);
+        log.debug("log.debugdatetimeInUTC"+datetimeInUTC);
+        log.debug("log.debugdatetimeInNashville"+datetimeInNashville);
+        log.debug("log.debugzdt"+zdt);
         return entityAuditEventRepository.findAllByCurrentDay(zdt, entityType);
+
+        // LocalDateTime localtDateAndTime = LocalDateTime.now();
+        // ZoneId zoneId = ZoneId.of("America/Chicago");
+        // ZonedDateTime datetimeInNashville  = ZonedDateTime.of(localtDateAndTime, zoneId);
+        // ZonedDateTime zdt = ZonedDateTime.of(datetimeInNashville.getYear(), datetimeInNashville.getMonthValue(), datetimeInNashville.getDayOfMonth(), 0, 0, 0, 0, zoneId);
+        // return entityAuditEventRepository.findAllByCurrentDay(zdt, entityType);
 
     }
 
