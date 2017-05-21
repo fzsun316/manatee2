@@ -18,7 +18,8 @@
             'angular-loading-bar',
             'gridster',
             'datatables',
-            'datatables.buttons'
+            'datatables.buttons',
+            'ngCookies'
         ])
         .run(run);
 

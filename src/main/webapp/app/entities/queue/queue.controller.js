@@ -5,9 +5,9 @@
         .module('manateeApp')
         .controller('QueueController', QueueController);
 
-    QueueController.$inject = ['$scope', '$state', 'Queue', 'ChatService', 'Team', 'Staff', 'EntityAuditService'];
+    QueueController.$inject = ['$scope', '$state', 'Queue', 'ChatService', 'Team', 'Staff', 'EntityAuditService','$cookies'];
 
-    function QueueController($scope, $state, Queue, ChatService, Team, Staff, EntityAuditService) {
+    function QueueController($scope, $state, Queue, ChatService, Team, Staff, EntityAuditService, $cookies) {
         var vm = this;
         $scope.queues = [];
 
@@ -39,7 +39,9 @@
                 handles: ['n', 'e', 's', 'w', 'ne', 'se', 'sw', 'nw'],
                 start: function(event, $element, widget) {}, // optional callback fired when resize is started,
                 resize: function(event, $element, widget) {}, // optional callback fired when item is resized,
-                stop: function(event, $element, widget) {} // optional callback fired when item is finished resizing
+                stop: function(event, $element, widget) {
+                    save_layout_to_cookie();
+                } // optional callback fired when item is finished resizing
             },
             draggable: {
                 enabled: false, // whether dragging items is supported
@@ -47,8 +49,7 @@
                 start: function(event, $element, widget) {}, // optional callback fired when drag is started,
                 drag: function(event, $element, widget) {}, // optional callback fired when item is moved,
                 stop: function(event, $element, widget) {
-                        console.log($scope.standardItems);
-
+                        save_layout_to_cookie();
                     } // optional callback fired when item is finished dragging
             }
         };
@@ -162,13 +163,28 @@
                         }
                         $scope.teams = arrayTeam;
 
+                        // console.log(JSON.parse($cookieStore.get('layoutSessionObj') ));
+                        // console.log(JSON.parse($cookies.getObject('layoutSessionObj')));
+                        
+                        var layoutSessionObj =  {};
+                        try {
+                            layoutSessionObj = JSON.parse($cookies.getObject('layoutSessionObj'));
+                        } catch(e) {
+                        }
+
                         if (!flag_reload) {
                             var standardItems = [];
-                            for (var i_team = 0; i_team < arrayPatientTeam.length; i_team++) {
-                                standardItems.push({
-                                    row: Math.floor(i_team / 3) * 3,
-                                    col: (i_team % 3) * 2
-                                });
+                            for (var i_team = 0; i_team < arrayTeam.length; i_team++) {
+                                // console.log(arrayTeam[i_team]);
+                                if (arrayTeam[i_team]['id'].toString() in layoutSessionObj) {
+                                    standardItems.push(layoutSessionObj[arrayTeam[i_team]['id'].toString()]);
+                                } else {
+                                    standardItems.push({
+                                        row: Math.floor(i_team / 3) * 3,
+                                        col: (i_team % 3) * 2,
+                                        teamID: arrayTeam[i_team]['id']
+                                    });
+                                }                                
                             }
                             $scope.standardItems = standardItems;
                         }
@@ -210,7 +226,7 @@
         $scope.loadAll(false);
 
         $scope.createConnectSortable = function() {
-            console.log(" $scope.createConnectSortable");
+            // console.log(" $scope.createConnectSortable");
             var scrollTimer;
 
             $(".connectedSortable").sortable({
@@ -291,19 +307,6 @@
                 }
             });
 
-            // $("#content-main").mousemove(function(e){
-            //     divPos = {
-            //         left: e.pageX - offset.left,
-            //         top: e.pageY - offset.top
-            //     };
-            //     console.log(divPos);
-            //     $("#content-main").removeEventListener("mousemove");
-            // });
-
-            // console.log($('#content-main').scrollTop());
-            // $('#content-main').animate({
-            //     scrollTop: $('#content-main').scrollTop() + 100
-            // }, "slow");
         }
 
         $('.drag').draggable({
@@ -361,15 +364,26 @@
             // $scope.createConnectSortable();
         };
 
+        function save_layout_to_cookie() {
+            var map_team_item = {};
+            for (var i_item = 0; i_item < $scope.standardItems.length; i_item++) {
+                // console.log($scope.standardItems[i_item]);
+                map_team_item[$scope.standardItems[i_item]['teamID'].toString()] =  $scope.standardItems[i_item];
+            }
+            $cookies.putObject('layoutSessionObj', JSON.stringify(map_team_item));
+        }
+
         $scope.boxeditorclicked = function() {
             if ($scope.gridsterOpts.draggable.enabled) {
                 $scope.gridsterOpts.draggable.enabled = false;
                 $scope.gridsterOpts.resizable.enabled = false;
+
+                // save_layout_to_cookie();
             } else {
                 $scope.gridsterOpts.draggable.enabled = true;
                 $scope.gridsterOpts.resizable.enabled = true;
             }
-            console.log($scope.gridsterOpts.draggable.enabled);
+            // console.log($scope.gridsterOpts.draggable.enabled);
 
         }
 
