@@ -36,10 +36,11 @@
         }
 
         // manatee custom service
-        function findByCurrentDay(entityType) {
+        function findByCurrentDay(entityType, flagManuallyReset) {
             return $http.get('api/audits/entity/changesSameDay', {
                 params: {
-                    entityType: entityType
+                    entityType: entityType,
+                    flagManuallyReset: flagManuallyReset
                 }
             }).then(function (response) {
                 return response.data;

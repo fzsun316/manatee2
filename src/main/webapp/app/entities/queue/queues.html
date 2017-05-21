@@ -16,12 +16,18 @@
         <button class="navigation-btn" ng-click="boxeditorclicked()" style="float:left;">
                     <span ng:class="{true:'glyphicon glyphicon-th', false:'glyphicon glyphicon-stop'}[gridsterOpts.draggable.enabled==true]" ></span> <span>{{gridsterOpts.draggable.enabled ? 'Box Editor Enabled' : 'Box Editor Disabled'}}</span>
                 </button>
+        <button class="navigation-btn" ng-click="resetTracker()" style="float:left;">
+                    <span class="glyphicon glyphicon-repeat"></span> <span>Reset Admission Tracker</span>
+                </button>
         <!-- {{testtest}} -->
     </div>
 <!-- class="glyphicon glyphicon-th" -->
 </div>
 
 <div class="content-content-wrapper">
+    <div id="scroll-up-area"><p>Scroll Up</p></div>
+    <div id="scroll-down-area"><p>Scroll Down</p></div>
+
     <div id="content-sidebar">
         <div id="content-sidebar-title">
         LIST OF QUEUES
@@ -147,6 +153,7 @@
             </ul>
         </div>
         </div>
+        
     </div>
 
 </div>

@@ -42,6 +42,8 @@ public class EntityAuditResource {
     @Inject
     private EntityAuditEventRepository entityAuditEventRepository;
 
+    static ZonedDateTime zdt_manually_set = null;
+
     /**
      * fetches all the audited entity types
      *
@@ -87,7 +89,7 @@ public class EntityAuditResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Secured(AuthoritiesConstants.USER)
-    public List<EntityAuditEvent> getChangesSameDay(@RequestParam(value = "entityType") String entityType)
+    public List<EntityAuditEvent> getChangesSameDay(@RequestParam(value = "entityType") String entityType, @RequestParam(value = "flagManuallyReset", required = false) Boolean flagManuallyReset)
         throws URISyntaxException {
         log.debug("REST request to get EntityAuditEvents of the current day");
         LocalDateTime localtDateAndTime = LocalDateTime.now();
@@ -96,9 +98,20 @@ public class EntityAuditResource {
         ZonedDateTime datetimeInUTC  = ZonedDateTime.of(localtDateAndTime, zoneId);
         ZonedDateTime datetimeInNashville  = datetimeInUTC.withZoneSameInstant(zoneId_local);
         ZonedDateTime zdt = ZonedDateTime.of(datetimeInNashville.getYear(), datetimeInNashville.getMonthValue(), datetimeInNashville.getDayOfMonth(), 8, 0, 0, 0, zoneId_local);
+
+        // zdt_manually_set = datetimeInNashville;
         log.debug("log.debugdatetimeInUTC"+datetimeInUTC);
         log.debug("log.debugdatetimeInNashville"+datetimeInNashville);
         log.debug("log.debugzdt"+zdt);
+        log.debug("log.debugzdt_manually_set"+zdt_manually_set);
+        if (flagManuallyReset !=null && flagManuallyReset == true) {
+            zdt_manually_set = datetimeInNashville;
+        }
+        if (zdt_manually_set !=null)
+            if (zdt.compareTo(zdt_manually_set)<0) {
+                zdt = zdt_manually_set;
+            }
+        log.debug("log.debugzdt))))"+zdt);
         return entityAuditEventRepository.findAllByCurrentDay(zdt, entityType);
 
         // LocalDateTime localtDateAndTime = LocalDateTime.now();

@@ -71,18 +71,19 @@
 
             var map_team_admission_count_today = {};
 
-            EntityAuditService.findByCurrentDay("com.fangzhou.manatee.domain.Queue").then(function(data) {
+            EntityAuditService.findByCurrentDay("com.fangzhou.manatee.domain.Queue", false).then(function(data) {
                 var audits = data.map(function(it) {
                     it.entityValue = JSON.parse(it.entityValue);
                     return it;
                 });
-                console.log(audits);
+                // console.log(audits);
                 map_team_admission_count_today = generate_table_data(audits);
                 Team.query(function(result) {
                     for (var i in result) {
                         if (typeof result[i] === "object")
                             if ('name' in result[i]) {
                                 var tmp_team_admission_count_today = map_team_admission_count_today['progressbartoday-' + result[i]['id']];
+                                // console.log(tmp_team_admission_count_today);
                                 if (tmp_team_admission_count_today == null) {
                                     // console.log("tmp_team_admission_count_today== null");
                                     tmp_team_admission_count_today = 0;
@@ -193,23 +194,33 @@
             });
         };
 
-        $scope.$watch('arrayPatientTeam', function() {
-            // $scope.createConnectSortable();
-        });
-        $scope.$watch('arrayPotentialDischargedPatient', function() {
-            // $scope.createConnectSortable();
-        });
+        $scope.resetTracker = function() {
+            EntityAuditService.findByCurrentDay("com.fangzhou.manatee.domain.Queue", true).then(function(data) {
+                $scope.addMessage();
+            });
+        }
+
+        // $scope.$watch('arrayPatientTeam', function() {
+        //     // $scope.createConnectSortable();
+        // });
+        // $scope.$watch('arrayPotentialDischargedPatient', function() {
+        //     // $scope.createConnectSortable();
+        // });
 
         $scope.loadAll(false);
 
         $scope.createConnectSortable = function() {
             console.log(" $scope.createConnectSortable");
+            var scrollTimer;
+
             $(".connectedSortable").sortable({
                 connectWith: ".connectedSortable",
                 items: "tr",
-                opacity: 0.5,
+                opacity: 0.0,
                 revert: 400,
+                scroll: true,
                 receive: function(event, ui) {
+                    
                     var id = $(ui.item).attr('id');
                     var teamID = this.id;
                     if (id == "potentialdischarge-tr" || id == -1) {
@@ -226,8 +237,86 @@
                     }
                     // console.log(id +"  receive: "+ teamID);
                 },
+                start: function(event, ui) {
+                    // console.log("start");        
+                    // startToScroll();    
+                    scrollTimer = setInterval(startToScroll, 500);
+                    $("#scroll-up-area").show();
+                    $("#scroll-down-area").show();
+                },
+                stop: function(event, ui) {
+                    // console.log("stop");
+                    clearInterval(scrollTimer);
+                    $("#scroll-up-area").hide();
+                    $("#scroll-down-area").hide();
+                },
             }).disableSelection();
         };
+
+        function startToScroll() {     
+            // console.log("startToScroll");
+            var offset = $("#content-main").offset();
+            var divPos;
+            // var divPos = {
+            //     left: event.pageX - offset.left,
+            //     top: event.pageY - offset.top
+            // };
+            var divHeight = $("#content-main").height();
+            var detectDivHeight = 30;
+            // console.log(divPos);
+            // console.log(divHeight);
+            // if (divPos.top<detectDivHeight) {
+            //     $('#content-main').animate({
+            //         scrollTop: $('#content-main').scrollTop() - 100
+            //     }, "slow");
+            // } else if (divPos.top > divHeight - detectDivHeight) {
+            //     $('#content-main').animate({
+            //         scrollTop: $('#content-main').scrollTop() + 100
+            //     }, "slow");
+            // }
+
+            jQuery(document).one('mousemove', function(e) {
+                divPos = {
+                    left: e.pageX - offset.left,
+                    top: e.pageY - offset.top
+                };
+                if (divPos.top<detectDivHeight) {
+                    $('#content-main').animate({
+                        scrollTop: $('#content-main').scrollTop() - 100
+                    }, "normal");
+                } else if (divPos.top > divHeight - detectDivHeight) {
+                    $('#content-main').animate({
+                        scrollTop: $('#content-main').scrollTop() + 100
+                    }, "normal");
+                }
+            });
+
+            // $("#content-main").mousemove(function(e){
+            //     divPos = {
+            //         left: e.pageX - offset.left,
+            //         top: e.pageY - offset.top
+            //     };
+            //     console.log(divPos);
+            //     $("#content-main").removeEventListener("mousemove");
+            // });
+
+            // console.log($('#content-main').scrollTop());
+            // $('#content-main').animate({
+            //     scrollTop: $('#content-main').scrollTop() + 100
+            // }, "slow");
+        }
+
+        $('.drag').draggable({
+           scroll:true,
+           start: function(){
+              $(this).data("startingScrollTop",$(this).parent().scrollTop());
+           },
+           drag: function(event,ui){
+              var st = parseInt($(this).data("startingScrollTop"));
+              ui.position.top -= $(this).parent().scrollTop() - st;
+           }
+        });
+
 
         $scope.addMessage = function(message) {
             ChatService.send("send test message");
