@@ -7,6 +7,11 @@
 
     PatientDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Patient', 'ReferralSource', 'EntityAuditService', 'DTOptionsBuilder', 'DTColumnBuilder', "$q"];
 
+    function zeroPad(num, places) {
+      var zero = places - num.toString().length + 1;
+      return Array(+(zero > 0 && zero)).join("0") + num;
+    }
+
     function generate_table_data(audits, entity) {
         var array_records = [];
         var tmp_patient_team = {};
@@ -18,7 +23,7 @@
                     var action = audits[i]['action'];
                     if (entityType == "com.fangzhou.manatee.domain.Queue") {
                         var patient = entityValue['patient'];
-                        var team = entityValue['team'];                        
+                        var team = entityValue['team'];
                         var teamBefore = "";
                         var utcDate = entityValue['lastModifiedDate']; // ISO-8601 formatted date returned from server
                         var localDate = new Date(utcDate);
@@ -27,7 +32,8 @@
                         }
                         var weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
                         var dayOfWeek = weekday[localDate.getDay()];
-                        var modifiedDate = (localDate.getMonth() + 1) + '/' + localDate.getDate() + '/' + localDate.getFullYear() + ' ' + localDate.getHours() + ':' + (localDate.getMinutes()<10?'0':'') + localDate.getMinutes();
+                        // var modifiedDate = (localDate.getMonth() + 1) + '/' + localDate.getDate() + '/' + localDate.getFullYear() + ' ' + localDate.getHours() + ':' + (localDate.getMinutes()<10?'0':'') + localDate.getMinutes();
+                        var modifiedDate = zeroPad(localDate.getMonth()+1, 2)+"/"+zeroPad(localDate.getDate(), 2)+"/"+zeroPad(localDate.getFullYear(), 4)+" "+zeroPad(localDate.getHours(),2)+":"+zeroPad(localDate.getMinutes(),2);
                         var dischargeTransfer = "";
                         var status = entityValue['status'];
                         if (action=="DELETE") {
@@ -134,7 +140,7 @@
             DTColumnBuilder.newColumn('dischargeTransfer').withTitle('Discharge/Transfer'),
             DTColumnBuilder.newColumn('dayOfWeek').withTitle('Day of Week'),
             DTColumnBuilder.newColumn('modifiedDate').withTitle('Time'),
-            DTColumnBuilder.newColumn('lastModifiedDate').withTitle('Timestamp'),
+            // DTColumnBuilder.newColumn('lastModifiedDate').withTitle('Timestamp'),
             DTColumnBuilder.newColumn('lastModifiedBy').withTitle('User')
             // .notVisible()
         ];
