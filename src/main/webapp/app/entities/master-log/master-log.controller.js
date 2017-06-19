@@ -41,9 +41,9 @@
           if (action=="DELETE") {
             dischargeTransfer="Discharge/Transfer";
           } else if (action=="UPDATE") {
-            if (teamBefore==team['name'] && status=="potentialdischarge") {
+            if (teamBefore==((team!==null && "name" in team) ? team['name']:"") && status=="potentialdischarge") {
               dischargeTransfer = "Possible Discharge/Transfer";
-            } else if (teamBefore==team['name'] && status!="potentialdischarge") {
+            } else if (teamBefore==((team!==null && "name" in team) ? team['name']:"") && status!="potentialdischarge") {
               dischargeTransfer = "Recover";
             } else {
               dischargeTransfer = "";
@@ -54,17 +54,17 @@
           }
 
           var tmp_one_record = {
-            'patientId': patient['medicalReferralID'],
-            'patientName': patient['name'],
+            'patientId': (patient!==null && "medicalReferralID" in patient) ? patient['medicalReferralID']:"",
+            'patientName': (patient!==null && "name" in patient) ? patient['name']:"",
             'lastModifiedDate': localDate.toString(),
-            'lastModifiedBy': entityValue['lastModifiedBy'],
+            'lastModifiedBy': (entityValue!==null && "lastModifiedBy" in entityValue) ? entityValue['lastModifiedBy']:"",
             'teamBefore': teamBefore,
-            'teamAfter': team['name'],
+            'teamAfter': (team!==null && "name" in team) ? team['name']:"",
             'dayOfWeek': dayOfWeek,
             'modifiedDate': modifiedDate,
             'dischargeTransfer': dischargeTransfer
           }
-          tmp_patient_team[patient['id']] = team['name'];
+          tmp_patient_team[patient['id']] = (team!==null && "name" in team) ? team['name']:"";
           // console.log(tmp_one_record)
           array_records.push(tmp_one_record);
         }
