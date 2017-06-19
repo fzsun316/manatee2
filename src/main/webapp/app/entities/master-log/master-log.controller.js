@@ -5,7 +5,7 @@
   .module('manateeApp')
   .controller('MasterLogController', MasterLogController);
 
-  MasterLogController.$inject = ['$scope', '$state', 'EntityAuditService', 'DTOptionsBuilder', 'DTColumnBuilder', "$q"];
+  MasterLogController.$inject = ['$scope', '$state', 'EntityAuditService', 'DTOptionsBuilder', 'DTColumnBuilder', "$q", "Principal"];
 
   function zeroPad(num, places) {
     var zero = places - num.toString().length + 1;
@@ -73,47 +73,57 @@
     return array_records;
   }
 
-  function MasterLogController($scope, $state, EntityAuditService, DTOptionsBuilder, DTColumnBuilder, $q) {
+  function MasterLogController($scope, $state, EntityAuditService, DTOptionsBuilder, DTColumnBuilder, $q, Principal) {
     var vm = this;
 
     vm.buttons = [{
-      extend: "excelHtml5",
-      filename: "master_log",
-      title: "Master Log Report",
-      exportOptions: {
-        columns: ':visible'
-      },
-      //CharSet: "utf8",
-      exportData: {
-        decodeEntities: true
-      }
+        extend: "excelHtml5",
+        filename: "master_log",
+        title: "Master Log Report",
+        exportOptions: {
+            columns: ':visible'
+        },
+        //CharSet: "utf8",
+        exportData: {
+            decodeEntities: true
+        }
     }, {
-      extend: "csvHtml5",
-      fileName: "master_log",
-      exportOptions: {
-        columns: ':visible'
-      },
-      exportData: {
-        decodeEntities: true
-      }
+        extend: "csvHtml5",
+        fileName: "master_log",
+        exportOptions: {
+            columns: ':visible'
+        },
+        exportData: {
+            decodeEntities: true
+        }
     }, {
-      extend: "pdfHtml5",
-      fileName: "master_log",
-      title: "Master Log Report",
-      exportOptions: {
-        columns: ':visible'
-      },
-      exportData: {
-        decodeEntities: true
-      }
+        extend: "pdfHtml5",
+        fileName: "master_log",
+        title: "Master Log Report",
+        exportOptions: {
+            columns: ':visible'
+        },
+        exportData: {
+            decodeEntities: true
+        }
     }, {
-      extend: 'print',
-      //text: 'Print current page',
-      autoPrint: false,
-      exportOptions: {
-        columns: ':visible'
-      }
+        extend: 'print',
+        //text: 'Print current page',
+        autoPrint: false,
+        exportOptions: {
+            columns: ':visible'
+        }
     }];
+
+    Principal.hasAuthority("ROLE_ADMIN")
+    .then(function (result) {
+        if (result) {
+          console.log("ROLE_ADMIN");
+        } else {
+          console.log("NOT ROLE_ADMIN");
+          $scope.dtOptions.buttons = [];
+        }
+    });
 
     $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
       return $q.when(EntityAuditService.findByEntity("com.fangzhou.manatee.domain.Queue", 9999).then(function(data) {

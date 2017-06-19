@@ -5,7 +5,7 @@
         .module('manateeApp')
         .controller('TeamDetailController', TeamDetailController);
 
-    TeamDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Team', 'EntityAuditService', 'DTOptionsBuilder', 'DTColumnBuilder', "$q"];
+    TeamDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Team', 'EntityAuditService', 'DTOptionsBuilder', 'DTColumnBuilder', "$q", "Principal"];
 
     function zeroPad(num, places) {
       var zero = places - num.toString().length + 1;
@@ -76,7 +76,7 @@
         return array_records;
     }
 
-    function TeamDetailController($scope, $rootScope, $stateParams, previousState, entity, Team, EntityAuditService, DTOptionsBuilder, DTColumnBuilder, $q) {
+    function TeamDetailController($scope, $rootScope, $stateParams, previousState, entity, Team, EntityAuditService, DTOptionsBuilder, DTColumnBuilder, $q, Principal) {
         var vm = this;
 
         vm.team = entity;
@@ -125,6 +125,16 @@
                 columns: ':visible'
             }
         }];
+
+        Principal.hasAuthority("ROLE_ADMIN")
+        .then(function (result) {
+            if (result) {
+              console.log("ROLE_ADMIN");
+            } else {
+              console.log("NOT ROLE_ADMIN");
+              $scope.dtOptions.buttons = [];
+            }
+        });
 
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
             return $q.when(EntityAuditService.findByEntity("com.fangzhou.manatee.domain.Queue", 9999).then(function(data) {
