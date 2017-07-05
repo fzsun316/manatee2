@@ -27,17 +27,17 @@
         <dt><span>Requesting Team<br/>Assignment</span></dt>
         <dd>
             <!-- <span>{{vm.patient.requestingAssignment}}</span> -->
-            <span ng:class="{true:'glyphicon glyphicon-ok', false:'glyphicon glyphicon-remove'}[vm.patient.requestingAssignment==1]" ></span>
+            <span ng:class="{true:'glyphicon glyphicon-ok', false:'glyphicon glyphicon-remove'}[vm.patient.requestingAssignment=='Yes']" ></span>
         </dd>
         <dt><span>Resident/NP Notified</span></dt>
         <dd>
             <!-- <span>{{vm.patient.residentnpNotified}}</span> -->
-            <span ng:class="{true:'glyphicon glyphicon-ok', false:'glyphicon glyphicon-remove'}[vm.patient.residentnpNotified==1]" ></span>
+            <span ng:class="{true:'glyphicon glyphicon-ok', false:'glyphicon glyphicon-remove'}[vm.patient.residentnpNotified=='Yes']" ></span>
         </dd>
         <dt><span>Attending Notified</span></dt>
         <dd>
             <!-- <span>{{vm.patient.attendingNotified}}</span> -->
-            <span ng:class="{true:'glyphicon glyphicon-ok', false:'glyphicon glyphicon-remove'}[vm.patient.attendingNotified==1]" ></span>
+            <span ng:class="{true:'glyphicon glyphicon-ok', false:'glyphicon glyphicon-remove'}[vm.patient.attendingNotified=='Yes']" ></span>
         </dd>
         <dt><span>Notes</span></dt>
         <dd>

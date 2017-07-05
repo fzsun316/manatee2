@@ -32,13 +32,13 @@ public class Patient extends AbstractAuditingEntity implements Serializable {
     private Long age;
 
     @Column(name = "requesting_assignment")
-    private Integer requestingAssignment;
+    private String requestingAssignment;
 
     @Column(name = "residentnp_notified")
-    private Integer residentnpNotified;
+    private String residentnpNotified;
 
     @Column(name = "attending_notified")
-    private Integer attendingNotified;
+    private String attendingNotified;
 
     @Column(name = "note")
     private String note;
@@ -93,42 +93,42 @@ public class Patient extends AbstractAuditingEntity implements Serializable {
         this.age = age;
     }
 
-    public Integer getRequestingAssignment() {
+    public String getRequestingAssignment() {
         return requestingAssignment;
     }
 
-    public Patient requestingAssignment(Integer requestingAssignment) {
+    public Patient requestingAssignment(String requestingAssignment) {
         this.requestingAssignment = requestingAssignment;
         return this;
     }
 
-    public void setRequestingAssignment(Integer requestingAssignment) {
+    public void setRequestingAssignment(String requestingAssignment) {
         this.requestingAssignment = requestingAssignment;
     }
 
-    public Integer getResidentnpNotified() {
+    public String getResidentnpNotified() {
         return residentnpNotified;
     }
 
-    public Patient residentnpNotified(Integer residentnpNotified) {
+    public Patient residentnpNotified(String residentnpNotified) {
         this.residentnpNotified = residentnpNotified;
         return this;
     }
 
-    public void setResidentnpNotified(Integer residentnpNotified) {
+    public void setResidentnpNotified(String residentnpNotified) {
         this.residentnpNotified = residentnpNotified;
     }
 
-    public Integer getAttendingNotified() {
+    public String getAttendingNotified() {
         return attendingNotified;
     }
 
-    public Patient attendingNotified(Integer attendingNotified) {
+    public Patient attendingNotified(String attendingNotified) {
         this.attendingNotified = attendingNotified;
         return this;
     }
 
-    public void setAttendingNotified(Integer attendingNotified) {
+    public void setAttendingNotified(String attendingNotified) {
         this.attendingNotified = attendingNotified;
     }
 

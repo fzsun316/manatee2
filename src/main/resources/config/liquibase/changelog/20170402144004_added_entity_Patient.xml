@@ -36,15 +36,15 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="requesting_assignment" type="int">
+            <column name="requesting_assignment" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             
-            <column name="residentnp_notified" type="int">
+            <column name="residentnp_notified" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             
-            <column name="attending_notified" type="int">
+            <column name="attending_notified" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             

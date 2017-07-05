@@ -40,8 +40,9 @@
         <div class="form-group">
             <label class="control-label" for="field_requestingAssignment">Person Requesting Team Assignment</label>
             <select class="form-control" name="requestingAssignment" id="field_requestingAssignment" ng-model="vm.patient.requestingAssignment">
-              <option value="1" ng-selected="1">Yes</option>
-              <option value="0" ng-selected="0">No</option>
+              <!-- <option value="" ng-selected=null></option> -->
+              <option value="No" ng-selected="No">No</option>
+              <option value="Yes" ng-selected="Yes">Yes</option>
             </select>
             <!-- <input type="text" class="form-control" name="requestingAssignment" id="field_requestingAssignment"
                     ng-model="vm.patient.requestingAssignment"
@@ -49,9 +50,9 @@
         </div>
         <div class="form-group">
             <label class="control-label" for="field_residentnpNotified">Resident/NP Notified</label>
-            <select class="form-control" name="residentnpNotified" id="field_residentnpNotified" ng-model="vm.patient.residentnpNotified">
-              <option value="1" ng-selected="1">Yes</option>
-              <option value="0" ng-selected="0">No</option>
+            <select class="form-control" name="residentnpNotified" id="field_residentnpNotified" ng-model="vm.patient.residentnpNotified">  
+              <option value="No" ng-selected="No">No</option>
+              <option value="Yes" ng-selected="Yes">Yes</option>
             </select>
             <!-- <input type="text" class="form-control" name="residentnpNotified" id="field_residentnpNotified"
                     ng-model="vm.patient.residentnpNotified"
@@ -60,8 +61,8 @@
         <div class="form-group">
             <label class="control-label" for="field_attendingNotified">Attending Notified</label>
             <select class="form-control" name="attendingNotified" id="field_attendingNotified" ng-model="vm.patient.attendingNotified">
-              <option value="1" ng-selected="1">Yes</option>
-              <option value="0" ng-selected="0">No</option>
+              <option value="No" ng-selected="No">No</option>
+              <option value="Yes" ng-selected="Yes">Yes</option>
             </select>
             <!-- <input type="text" class="form-control" name="attendingNotified" id="field_attendingNotified"
                     ng-model="vm.patient.attendingNotified"

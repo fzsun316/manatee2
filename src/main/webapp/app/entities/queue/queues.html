@@ -130,7 +130,7 @@
                             <tbody  id={{teams[$index].id}} class="connectedSortable" style="">
                                 <tr style="" ng-repeat="patientItem in arrayPatientTeam[$index]" id={{patientItem.id}} ng-switch on="teams[$index].name" ng-class="{0:'default', 1:'grayout'}[patientItem.status]">
                                     <td style="">{{patientItem.patient.medicalReferralID}}</td>
-                                    <td style="" id="name"><a ui-sref="patient-detail({id:patientItem.id})">{{patientItem.patient.name}}</a></td>
+                                    <td style="" id="name"><a ui-sref="patient-detail({id:patientItem.patient.id})">{{patientItem.patient.name}}</a></td>
                                 </tr>
                                 <!-- <tr style="" ng-repeat="patientItem in arrayPatientTeam[$index]" id={{patientItem.id}} ng-switch on="teams[$index].name" ng-class="{0:'default', 1:'grayout'}[patientItem.status]">
                                     <td style="">{{patientItem.patient.medicalReferralID}}</td>

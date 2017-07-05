@@ -98,9 +98,9 @@
                                 name: null,
                                 medicalReferralID: null,
                                 age: null,
-                                requestingAssignment: null,
-                                residentnpNotified: null,
-                                attendingNotified: null,
+                                requestingAssignment: "No",
+                                residentnpNotified: "No",
+                                attendingNotified: "No",
                                 id: null,
                                 note: null
                             };

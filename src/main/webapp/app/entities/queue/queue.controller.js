@@ -112,7 +112,7 @@
                                         for (var j in arrayTeam) {
                                             if (arrayTeam[j]['name'] == result[i]['team']['name']) {
                                                 var tmp = result[i];
-                                                // console.log(tmp);
+                                                console.log(tmp);
                                                 // // check if name equals empty
                                                 // if(tmp['patient'] && tmp['patient']['name']=='') {
                                                 //     tmp['patient']['name']=' ';
