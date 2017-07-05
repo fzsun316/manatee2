@@ -23,10 +23,11 @@
                     <th><span>Name</span></th>
                     <th><span>Medical Record Number</span></th>
                     <th><span>Age</span></th>
-                    <th><span>Condition</span></th>
-                    <th><span>Priority</span></th>
-                    <th><span>Deadline</span></th>
+                    <th><span>Requesting Assignment</span></th>
+                    <th><span>Resident/NP Notified</span></th>
+                    <th><span>Attending Notified</span></th>
                     <th><span>Referral Source</span></th>
+                    <th><span>Note</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -36,12 +37,13 @@
                     <td>{{patient.name}}</td>
                     <td>{{patient.medicalReferralID}}</td>
                     <td>{{patient.age}}</td>
-                    <td>{{patient.conditionDesciption}}</td>
-                    <td>{{patient.priority}}</td>
-                    <td>{{patient.deadline | date:'medium'}}</td>
+                    <td><span ng:class="{true:'glyphicon glyphicon-ok', false:'glyphicon glyphicon-remove'}[patient.requestingAssignment==1]" ></span></td>
+                    <td><span ng:class="{true:'glyphicon glyphicon-ok', false:'glyphicon glyphicon-remove'}[patient.residentnpNotified==1]" ></span></td>
+                    <td><span ng:class="{true:'glyphicon glyphicon-ok', false:'glyphicon glyphicon-remove'}[patient.attendingNotified==1]" ></span></td>
                     <td>
                         <a ui-sref="referral-source-detail({id:patient.referralSource.id})">{{patient.referralSource.id}}</a>
                     </td>
+                    <td>{{patient.note}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

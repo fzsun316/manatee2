@@ -98,10 +98,11 @@
                                 name: null,
                                 medicalReferralID: null,
                                 age: null,
-                                conditionDesciption: null,
-                                priority: null,
-                                deadline: null,
-                                id: null
+                                requestingAssignment: null,
+                                residentnpNotified: null,
+                                attendingNotified: null,
+                                id: null,
+                                note: null
                             };
                         }
                     }

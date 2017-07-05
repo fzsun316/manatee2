@@ -31,14 +31,17 @@ public class Patient extends AbstractAuditingEntity implements Serializable {
     @Column(name = "age")
     private Long age;
 
-    @Column(name = "condition_desciption")
-    private String conditionDesciption;
+    @Column(name = "requesting_assignment")
+    private Integer requestingAssignment;
 
-    @Column(name = "priority")
-    private String priority;
+    @Column(name = "residentnp_notified")
+    private Integer residentnpNotified;
 
-    @Column(name = "deadline")
-    private ZonedDateTime deadline;
+    @Column(name = "attending_notified")
+    private Integer attendingNotified;
+
+    @Column(name = "note")
+    private String note;
 
     @ManyToOne
     private ReferralSource referralSource;
@@ -90,43 +93,56 @@ public class Patient extends AbstractAuditingEntity implements Serializable {
         this.age = age;
     }
 
-    public String getConditionDesciption() {
-        return conditionDesciption;
+    public Integer getRequestingAssignment() {
+        return requestingAssignment;
     }
 
-    public Patient conditionDesciption(String conditionDesciption) {
-        this.conditionDesciption = conditionDesciption;
+    public Patient requestingAssignment(Integer requestingAssignment) {
+        this.requestingAssignment = requestingAssignment;
         return this;
     }
 
-    public void setConditionDesciption(String conditionDesciption) {
-        this.conditionDesciption = conditionDesciption;
+    public void setRequestingAssignment(Integer requestingAssignment) {
+        this.requestingAssignment = requestingAssignment;
     }
 
-    public String getPriority() {
-        return priority;
+    public Integer getResidentnpNotified() {
+        return residentnpNotified;
     }
 
-    public Patient priority(String priority) {
-        this.priority = priority;
+    public Patient residentnpNotified(Integer residentnpNotified) {
+        this.residentnpNotified = residentnpNotified;
         return this;
     }
 
-    public void setPriority(String priority) {
-        this.priority = priority;
+    public void setResidentnpNotified(Integer residentnpNotified) {
+        this.residentnpNotified = residentnpNotified;
     }
 
-    public ZonedDateTime getDeadline() {
-        return deadline;
+    public Integer getAttendingNotified() {
+        return attendingNotified;
     }
 
-    public Patient deadline(ZonedDateTime deadline) {
-        this.deadline = deadline;
+    public Patient attendingNotified(Integer attendingNotified) {
+        this.attendingNotified = attendingNotified;
         return this;
     }
 
-    public void setDeadline(ZonedDateTime deadline) {
-        this.deadline = deadline;
+    public void setAttendingNotified(Integer attendingNotified) {
+        this.attendingNotified = attendingNotified;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public Patient note(String note) {
+        this.note = note;
+        return this;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public ReferralSource getReferralSource() {
@@ -169,9 +185,10 @@ public class Patient extends AbstractAuditingEntity implements Serializable {
             ", name='" + name + "'" +
             ", medicalReferralID='" + medicalReferralID + "'" +
             ", age='" + age + "'" +
-            ", conditionDesciption='" + conditionDesciption + "'" +
-            ", priority='" + priority + "'" +
-            ", deadline='" + deadline + "'" +
+            ", requestingAssignment='" + requestingAssignment + "'" +
+            ", residentnpNotified='" + residentnpNotified + "'" +
+            ", attendingNotified='" + attendingNotified + "'" +
+            ", note='" + note + "'" +
             '}';
     }
 }

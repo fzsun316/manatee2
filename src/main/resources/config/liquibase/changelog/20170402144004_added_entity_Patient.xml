@@ -36,15 +36,15 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="condition_desciption" type="varchar(255)">
+            <column name="requesting_assignment" type="int">
                 <constraints nullable="true" />
             </column>
             
-            <column name="priority" type="varchar(255)">
+            <column name="residentnp_notified" type="int">
                 <constraints nullable="true" />
             </column>
             
-            <column name="deadline" type="timestamp">
+            <column name="attending_notified" type="int">
                 <constraints nullable="true" />
             </column>
             
@@ -61,8 +61,10 @@
             <column name='last_modified_by' type='varchar(50)'/>
             <column name='last_modified_date' type='timestamp'/>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+            <column name="note" type="varchar(511)">
+                <constraints nullable="true" />
+            </column>
         </createTable>
-        <dropDefaultValue tableName="patient" columnName="deadline" columnDataType="datetime"/>
         
     </changeSet>
 </databaseChangeLog>

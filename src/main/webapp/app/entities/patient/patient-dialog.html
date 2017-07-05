@@ -32,33 +32,47 @@
                      />
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_conditionDesciption">Condition Desciption</label>
-            <input type="text" class="form-control" name="conditionDesciption" id="field_conditionDesciption"
-                    ng-model="vm.patient.conditionDesciption"
-                     />
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="field_priority">Priority</label>
-            <input type="text" class="form-control" name="priority" id="field_priority"
-                    ng-model="vm.patient.priority"
-                     />
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="field_deadline">Deadline</label>
-                <div class="input-group">
-                    <input id="field_deadline" type="text" class="form-control" name="deadline" datetime-picker="{{dateformat}}" ng-model="vm.patient.deadline" is-open="vm.datePickerOpenStatus.deadline"
-                      />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('deadline')"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                </div>
-        </div>
-
-        <div class="form-group">
             <label for="field_referralSource">Referral Source</label>
             <select class="form-control" id="field_referralSource" name="referralSource" ng-model="vm.patient.referralSource" ng-options="referralSource as referralSource.id for referralSource in vm.referralsources track by referralSource.id">
                 <option value=""></option>
             </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_requestingAssignment">Person Requesting Team Assignment</label>
+            <select class="form-control" name="requestingAssignment" id="field_requestingAssignment" ng-model="vm.patient.requestingAssignment">
+              <option value="1" ng-selected="1">Yes</option>
+              <option value="0" ng-selected="0">No</option>
+            </select>
+            <!-- <input type="text" class="form-control" name="requestingAssignment" id="field_requestingAssignment"
+                    ng-model="vm.patient.requestingAssignment"
+                     /> -->
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_residentnpNotified">Resident/NP Notified</label>
+            <select class="form-control" name="residentnpNotified" id="field_residentnpNotified" ng-model="vm.patient.residentnpNotified">
+              <option value="1" ng-selected="1">Yes</option>
+              <option value="0" ng-selected="0">No</option>
+            </select>
+            <!-- <input type="text" class="form-control" name="residentnpNotified" id="field_residentnpNotified"
+                    ng-model="vm.patient.residentnpNotified"
+                     /> -->
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_attendingNotified">Attending Notified</label>
+            <select class="form-control" name="attendingNotified" id="field_attendingNotified" ng-model="vm.patient.attendingNotified">
+              <option value="1" ng-selected="1">Yes</option>
+              <option value="0" ng-selected="0">No</option>
+            </select>
+            <!-- <input type="text" class="form-control" name="attendingNotified" id="field_attendingNotified"
+                    ng-model="vm.patient.attendingNotified"
+                     /> -->
+        </div>        
+        <div class="form-group">
+            <label class="control-label" for="field_note">Notes</label>
+            <!-- <input type="text" class="form-control" name="note" id="field_note"
+                    ng-model="vm.patient.note"
+                     /> -->
+            <textarea  class="form-control" id="field_note" rows="4" cols="70" name="note" ng-model="vm.patient.note"></textarea>
         </div>
     </div>
     <div class="modal-footer">

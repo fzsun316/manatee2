@@ -20,21 +20,28 @@
         <dd>
             <span>{{vm.patient.age}}</span>
         </dd>
-        <dt><span>Condition</span></dt>
-        <dd>
-            <span>{{vm.patient.conditionDesciption}}</span>
-        </dd>
-        <dt><span>Priority</span></dt>
-        <dd>
-            <span>{{vm.patient.priority}}</span>
-        </dd>
-        <dt><span>Deadline</span></dt>
-        <dd>
-            <span>{{vm.patient.deadline | date:'medium'}}</span>
-        </dd>
         <dt><span>Referral Source</span></dt>
         <dd>
             <a ui-sref="referral-source-detail({id:vm.patient.referralSource.id})">{{vm.patient.referralSource.id}}</a>
+        </dd>
+        <dt><span>Requesting Team<br/>Assignment</span></dt>
+        <dd>
+            <!-- <span>{{vm.patient.requestingAssignment}}</span> -->
+            <span ng:class="{true:'glyphicon glyphicon-ok', false:'glyphicon glyphicon-remove'}[vm.patient.requestingAssignment==1]" ></span>
+        </dd>
+        <dt><span>Resident/NP Notified</span></dt>
+        <dd>
+            <!-- <span>{{vm.patient.residentnpNotified}}</span> -->
+            <span ng:class="{true:'glyphicon glyphicon-ok', false:'glyphicon glyphicon-remove'}[vm.patient.residentnpNotified==1]" ></span>
+        </dd>
+        <dt><span>Attending Notified</span></dt>
+        <dd>
+            <!-- <span>{{vm.patient.attendingNotified}}</span> -->
+            <span ng:class="{true:'glyphicon glyphicon-ok', false:'glyphicon glyphicon-remove'}[vm.patient.attendingNotified==1]" ></span>
+        </dd>
+        <dt><span>Notes</span></dt>
+        <dd>
+            <span>{{vm.patient.note}}</span>
         </dd>
     </dl>
 
