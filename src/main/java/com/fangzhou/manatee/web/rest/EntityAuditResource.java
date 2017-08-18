@@ -80,6 +80,39 @@ public class EntityAuditResource {
     }
 
     /**
+     * delete the list for an entity class in the current day
+     *
+     * @return
+     */
+    /*
+    @RequestMapping(value = "/audits/entity/deleteSameDay",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Secured(AuthoritiesConstants.USER)
+    public List<EntityAuditEvent> deleteChangesSameDay(@RequestParam(value = "entityType") String entityType)
+        throws URISyntaxException {
+        log.debug("REST request to delete EntityAuditEvents of the current day");
+        LocalDateTime localtDateAndTime = LocalDateTime.now();
+        ZoneId zoneId = ZoneId.of("UTC");
+        ZoneId zoneId_local = ZoneId.of("America/Chicago");
+        ZonedDateTime datetimeInUTC  = ZonedDateTime.of(localtDateAndTime, zoneId);
+        ZonedDateTime datetimeInNashville  = datetimeInUTC.withZoneSameInstant(zoneId_local);
+        ZonedDateTime zdt = ZonedDateTime.of(datetimeInNashville.getYear(), datetimeInNashville.getMonthValue(), datetimeInNashville.getDayOfMonth(), 8, 0, 0, 0, zoneId_local);
+
+        log.debug("log.debugzdt))))"+zdt);
+        return entityAuditEventRepository.deleteAllByCurrentDay(zdt, entityType);
+
+        // LocalDateTime localtDateAndTime = LocalDateTime.now();
+        // ZoneId zoneId = ZoneId.of("America/Chicago");
+        // ZonedDateTime datetimeInNashville  = ZonedDateTime.of(localtDateAndTime, zoneId);
+        // ZonedDateTime zdt = ZonedDateTime.of(datetimeInNashville.getYear(), datetimeInNashville.getMonthValue(), datetimeInNashville.getDayOfMonth(), 0, 0, 0, 0, zoneId);
+        // return entityAuditEventRepository.findAllByCurrentDay(zdt, entityType);
+
+    }
+    */
+
+    /**
      * fetches the change list for an entity class in the current day
      *
      * @return

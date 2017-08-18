@@ -82,7 +82,7 @@
                 Team.query(function(result) {
                     for (var i in result) {
                         if (typeof result[i] === "object")
-                            if ('name' in result[i]) {
+                            if ('name' in result[i] && result[i]['id'] !== null) {
                                 var tmp_team_admission_count_today = map_team_admission_count_today['progressbartoday-' + result[i]['id']];
                                 // console.log(tmp_team_admission_count_today);
                                 if (tmp_team_admission_count_today == null) {
@@ -176,7 +176,7 @@
                             var standardItems = [];
                             for (var i_team = 0; i_team < arrayTeam.length; i_team++) {
                                 // console.log(arrayTeam[i_team]);
-                                if (arrayTeam[i_team]['id'].toString() in layoutSessionObj) {
+                                if (arrayTeam[i_team]['id'] !== null && arrayTeam[i_team]['id'].toString() in layoutSessionObj) {
                                     standardItems.push(layoutSessionObj[arrayTeam[i_team]['id'].toString()]);
                                 } else {
                                     standardItems.push({
@@ -209,6 +209,23 @@
 
             });
         };
+
+        $scope.resetBoard = function() {
+            Queue.query(function(result) {
+                        for (var i in result) {
+                            if (typeof result[i] === "object") {
+                                if (result[i]['id'] !== null)
+                                Queue.delete({id: result[i]['id']}, function () {
+                                    // $uibModalInstance.close(true);
+                                });                                
+                            }
+                        }
+                        $scope.addMessage();
+                    });
+            // EntityAuditService.deleteByCurrentDay("com.fangzhou.manatee.domain.Queue", true).then(function(data) {
+            //     $scope.addMessage();
+            // });
+        }
 
         $scope.resetTracker = function() {
             EntityAuditService.findByCurrentDay("com.fangzhou.manatee.domain.Queue", true).then(function(data) {
@@ -546,7 +563,7 @@
                             var team = entityValue['team'];
                             var flag_admission = false;
                             var patient = entityValue['patient'];
-                            if (patient['id'] in tmp_patient_team) {
+                            if (patient !==null && patient['id'] in tmp_patient_team && patient['id'] !==null && tmp_patient_team[patient['id']]!==null) {
                                 teamBefore = tmp_patient_team[patient['id']]['name'];
                             }
 
@@ -560,7 +577,7 @@
                             }
                             // $scope.testtest = localDate.toString()+"|"+localDate.getHours()
                             // console.log(team['name'] + flag_admission.toString() + localDate.toString()+"|"+ localDate.getHours());
-                            if (flag_admission) {
+                            if (flag_admission && team!=null && team['id']!==null) {
                                 var team = entityValue['team'];
                                 var teamId = "progressbartoday-" + team['id'].toString();
                                 if (teamId in tmp_team_count) {
@@ -570,7 +587,8 @@
                                 }
                             }
 
-                            tmp_patient_team[patient['id']] = team;
+                            if (patient!==null)
+                                tmp_patient_team[patient['id']] = team;
                         }
                     }
             }

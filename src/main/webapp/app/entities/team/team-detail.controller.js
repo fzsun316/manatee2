@@ -35,7 +35,7 @@
                         var weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
                         var dayOfWeek = weekday[localDate.getDay()];
                         // var modifiedDate = (localDate.getMonth() + 1) + '/' + localDate.getDate() + '/' + localDate.getFullYear() + ' ' + localDate.getHours() + ':' + (localDate.getMinutes()<10?'0':'') + localDate.getMinutes();
-                        var modifiedDate = zeroPad(localDate.getMonth()+1, 2)+"/"+zeroPad(localDate.getDate(), 2)+"/"+zeroPad(localDate.getFullYear(), 4)+" "+zeroPad(localDate.getHours(),2)+":"+zeroPad(localDate.getMinutes(),2);
+                        var modifiedDate = zeroPad(localDate.getMonth()+1, 2)+"/"+zeroPad(localDate.getDate(), 2)+"/"+zeroPad(localDate.getFullYear(), 4)+" "+zeroPad(localDate.getHours(),2)+":"+zeroPad(localDate.getMinutes(),2)+":"+zeroPad(localDate.getSeconds(),2);
 
                         var dischargeTransfer = "";
                         var status = entityValue['status'];

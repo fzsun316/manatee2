@@ -13,6 +13,7 @@
             findAllAudited: findAllAudited,
             findByEntity: findByEntity,
             getPrevVersion: getPrevVersion,
+            deleteByCurrentDay: deleteByCurrentDay,
             findByCurrentDay: findByCurrentDay
         };
 
@@ -41,6 +42,17 @@
                 params: {
                     entityType: entityType,
                     flagManuallyReset: flagManuallyReset
+                }
+            }).then(function (response) {
+                return response.data;
+            });
+        }
+
+        // manatee custom service
+        function deleteByCurrentDay(entityType) {
+            return $http.get('api/audits/entity/deleteSameDay', {
+                params: {
+                    entityType: entityType
                 }
             }).then(function (response) {
                 return response.data;

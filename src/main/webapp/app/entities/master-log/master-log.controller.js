@@ -27,14 +27,14 @@
           var teamBefore = "";
           var utcDate = entityValue['lastModifiedDate']; // ISO-8601 formatted date returned from server
           var localDate = new Date(utcDate);
-          if (patient['id'] in tmp_patient_team) {
+          if (patient!==null && patient['id'] in tmp_patient_team) {
             teamBefore = tmp_patient_team[patient['id']];
           }
           var weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
           var dayOfWeek = weekday[localDate.getDay()];
           // var modifiedDate = String.format("%02d %02d %04d %02d:%02d", (localDate.getMonth()+1), localDate.getDate(), localDate.getFullYear(), localDate.getHours(), localDate.getMinutes());
           // var modifiedDate = (localDate.getMonth()+1) + '/' + localDate.getDate() + '/' + localDate.getFullYear() + ' ' + localDate.getHours() + ':' + (localDate.getMinutes()<10?'0':'') + localDate.getMinutes();
-          var modifiedDate = zeroPad(localDate.getMonth()+1, 2)+"/"+zeroPad(localDate.getDate(), 2)+"/"+zeroPad(localDate.getFullYear(), 4)+" "+zeroPad(localDate.getHours(),2)+":"+zeroPad(localDate.getMinutes(),2);
+          var modifiedDate = zeroPad(localDate.getMonth()+1, 2)+"/"+zeroPad(localDate.getDate(), 2)+"/"+zeroPad(localDate.getFullYear(), 4)+" "+zeroPad(localDate.getHours(),2)+":"+zeroPad(localDate.getMinutes(),2)+":"+zeroPad(localDate.getSeconds(),2);
 
           var dischargeTransfer = "";
           var status = entityValue['status'];
@@ -64,7 +64,8 @@
             'modifiedDate': modifiedDate,
             'dischargeTransfer': dischargeTransfer
           }
-          tmp_patient_team[patient['id']] = (team!==null && "name" in team) ? team['name']:"";
+          if (patient!==null)
+            tmp_patient_team[patient['id']] = (team!==null && "name" in team) ? team['name']:"";
           // console.log(tmp_one_record)
           array_records.push(tmp_one_record);
         }

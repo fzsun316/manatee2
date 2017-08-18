@@ -37,9 +37,15 @@
                     <td>{{patient.name}}</td>
                     <td>{{patient.medicalReferralID}}</td>
                     <td>{{patient.age}}</td>
-                    <td><span ng:class="{true:'glyphicon glyphicon-ok', false:'glyphicon glyphicon-remove'}[patient.requestingAssignment=='Yes']" ></span></td>
-                    <td><span ng:class="{true:'glyphicon glyphicon-ok', false:'glyphicon glyphicon-remove'}[patient.residentnpNotified=='Yes']" ></span></td>
-                    <td><span ng:class="{true:'glyphicon glyphicon-ok', false:'glyphicon glyphicon-remove'}[patient.attendingNotified=='Yes']" ></span></td>
+                    <td>{{patient.requestingAssignment}}
+                    <!-- <span ng:class="{true:'glyphicon glyphicon-ok', false:'glyphicon glyphicon-remove'}[patient.requestingAssignment=='Yes']" ></span> -->
+                    </td>
+                    <td>{{patient.residentnpNotified}}
+                    <!-- <span ng:class="{true:'glyphicon glyphicon-ok', false:'glyphicon glyphicon-remove'}[patient.residentnpNotified=='Yes']" ></span> -->
+                    </td>
+                    <td>{{patient.attendingNotified}}
+                    <!-- <span ng:class="{true:'glyphicon glyphicon-ok', false:'glyphicon glyphicon-remove'}[patient.attendingNotified=='Yes']" ></span> -->
+                    </td>
                     <td>
                         <a ui-sref="referral-source-detail({id:patient.referralSource.id})">{{patient.referralSource.id}}</a>
                     </td>

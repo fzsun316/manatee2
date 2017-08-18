@@ -28,10 +28,14 @@
 
         function save () {
             vm.isSaving = true;
-            if (vm.queue.id !== null) {
-                Queue.update(vm.queue, onSaveSuccess, onSaveError);
-            } else {
-                Queue.save(vm.queue, onSaveSuccess, onSaveError);
+            if (vm.queue.team !=null && vm.queue.patient !=null)
+                if (vm.queue.id !== null) {
+                    Queue.update(vm.queue, onSaveSuccess, onSaveError);
+                } else {
+                    Queue.save(vm.queue, onSaveSuccess, onSaveError);
+                }
+            else {
+                onSaveError();
             }
         }
 

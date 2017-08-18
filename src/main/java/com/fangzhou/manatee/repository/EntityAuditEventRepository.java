@@ -29,6 +29,10 @@ public interface EntityAuditEventRepository extends JpaRepository<EntityAuditEve
     @Query("SELECT a FROM EntityAuditEvent a where a.entityType = :type and a.modifiedDate > :modifiedDate")
     List<EntityAuditEvent> findAllByCurrentDay(@Param("modifiedDate") ZonedDateTime modifiedDate, @Param("type") String type);
 
+    // @Query("DELETE FROM Queue")
+    // List<EntityAuditEvent> deleteAllQueue();
+
+
 
 
     @Query("SELECT ae FROM EntityAuditEvent ae where ae.entityType = :type and ae.entityId = :entityId and " +
