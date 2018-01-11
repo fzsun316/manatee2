@@ -5,16 +5,28 @@
         .module('manateeApp')
         .controller('QueueController', QueueController);
 
-    QueueController.$inject = ['$scope', '$state', 'Queue', 'ChatService', 'Team', 'Staff', 'EntityAuditService','$cookies'];
+    QueueController.$inject = ['$scope', '$state', 'Queue', 'ChatService', 'Team', 'Staff', 'EntityAuditService','$cookies', '$resource', "Principal"];
 
-    function QueueController($scope, $state, Queue, ChatService, Team, Staff, EntityAuditService, $cookies) {
+    function QueueController($scope, $state, Queue, ChatService, Team, Staff, EntityAuditService, $cookies, $resource, Principal) {
         var vm = this;
         $scope.queues = [];
+
+        $scope.isAdmin = false;
+        Principal.hasAuthority("ROLE_ADMIN")
+        .then(function (result) {
+            if (result) {
+              console.log("ROLE_ADMIN");
+              $scope.isAdmin = true;
+            } else {
+              console.log("NOT ROLE_ADMIN");
+              $scope.isAdmin = false;
+            }
+        });
 
         $scope.gridsterOpts = {
             columns: 6, // the width of the grid, in columns
             pushing: true, // whether to push other items out of the way on move or resize
-            floating: true, // whether to automatically float items up so they stack (you can temporarily disable if you are adding unsorted items with ng-repeat)
+            floating: false, // whether to automatically float items up so they stack (you can temporarily disable if you are adding unsorted items with ng-repeat)
             swapping: false, // whether or not to have items of the same size switch places instead of pushing down if they are the same size
             width: 'auto', // can be an integer or 'auto'. 'auto' scales gridster to be the full width of its containing element
             colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'
@@ -163,47 +175,38 @@
                         }
                         $scope.teams = arrayTeam;
 
-                        // console.log(JSON.parse($cookieStore.get('layoutSessionObj') ));
-                        // console.log(JSON.parse($cookies.getObject('layoutSessionObj')));
-                        
-                        var layoutSessionObj =  {};
-                        try {
-                            layoutSessionObj = JSON.parse($cookies.getObject('layoutSessionObj'));
-                        } catch(e) {
-                        }
-
-                        if (!flag_reload) {
-                            var standardItems = [];
-                            for (var i_team = 0; i_team < arrayTeam.length; i_team++) {
-                                // console.log(arrayTeam[i_team]);
-                                if (arrayTeam[i_team]['id'] !== null && arrayTeam[i_team]['id'].toString() in layoutSessionObj) {
-                                    standardItems.push(layoutSessionObj[arrayTeam[i_team]['id'].toString()]);
-                                } else {
-                                    standardItems.push({
-                                        row: Math.floor(i_team / 3) * 3,
-                                        col: (i_team % 3) * 2,
-                                        teamID: arrayTeam[i_team]['id']
-                                    });
-                                }                                
+                        var Customlayout = $resource('api/customlayouts/',{});
+                        var customlayouts = Customlayout.query(function(result) {
+                            var layoutMap={};
+                            for(var i in result) {
+                                if (typeof result[i] === "object") {
+                                    if ('layout' in result[i] && 'title' in result[i] && result[i]['layout'] !== null && result[i]['title'] !== null) {
+                                        var layoutID = result[i]['title'];
+                                        var layoutLayout = JSON.parse(result[i]['layout']);
+                                        layoutMap[layoutID] = layoutLayout;
+                                    }
+                                }
                             }
-                            $scope.standardItems = standardItems;
-                        }
+                            if (!flag_reload) {
+                                var standardItems = [];
+                                for (var i_team = 0; i_team < arrayTeam.length; i_team++) {
+                                    if (arrayTeam[i_team]['id'] !== null && layoutMap!=null && arrayTeam[i_team]['id'].toString() in layoutMap) {
+                                        standardItems.push(layoutMap[ arrayTeam[i_team]['id'].toString() ])
+                                    } else {
+                                        standardItems.push({
+                                            row: Math.floor(i_team / 3) * 3,
+                                            col: (i_team % 3) * 2,
+                                            teamID: arrayTeam[i_team]['id']
+                                        });
+                                    } 
+                                }
+                                $scope.standardItems = standardItems;
+                            }
+                        });
+
                         $scope.arrayPatientTeam = arrayPatientTeam;
                         $scope.arrayPotentialDischargedPatient = arrayPotentialDischargedPatient;
-                        // $scope.arrayIncomingPatient = arrayIncomingPatient;
 
-                        // console.log(arrayPatientTeam);
-                        // console.log(arrayPotentialDischargedPatient);
-                        // $scope.createConnectSortable();
-
-                        // var myVar = setInterval(myTimer, 3000);
-
-                        // function myTimer() {
-                        //     $scope.testtttt();
-                        //     console.log("dfasdfsadf");
-                        //     $scope.arrayPatientTeam = [];
-                        //     $scope.arrayPotentialDischargedPatient = [];
-                        // }
                     });
                 });
 
@@ -385,9 +388,22 @@
             var map_team_item = {};
             for (var i_item = 0; i_item < $scope.standardItems.length; i_item++) {
                 // console.log($scope.standardItems[i_item]);
-                map_team_item[$scope.standardItems[i_item]['teamID'].toString()] =  $scope.standardItems[i_item];
+                // map_team_item[$scope.standardItems[i_item]['teamID'].toString()] =  $scope.standardItems[i_item];
+                var Customlayout = $resource('api/customlayouts/',{});
+                var layout_to_save = {};
+                layout_to_save.title = $scope.standardItems[i_item]['teamID'].toString();
+                layout_to_save.layout=JSON.stringify($scope.standardItems[i_item]);
+                var customlayouts = Customlayout.save(layout_to_save);
             }
-            $cookies.putObject('layoutSessionObj', JSON.stringify(map_team_item));
+            // $cookies.putObject('layoutSessionObj', JSON.stringify(map_team_item));
+            // localStorage.setItem("layoutSessionObj", JSON.stringify(map_team_item));
+
+            // var Customlayout = $resource('api/customlayouts/',{});
+            // var layout_to_save = {};
+            // layout_to_save.title="default";
+            // layout_to_save.layout=JSON.stringify(map_team_item);
+            // var customlayouts = Customlayout.save(layout_to_save);
+
         }
 
         $scope.boxeditorclicked = function() {

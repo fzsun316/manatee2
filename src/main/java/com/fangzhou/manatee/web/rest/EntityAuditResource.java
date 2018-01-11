@@ -130,7 +130,7 @@ public class EntityAuditResource {
         ZoneId zoneId_local = ZoneId.of("America/Chicago");
         ZonedDateTime datetimeInUTC  = ZonedDateTime.of(localtDateAndTime, zoneId);
         ZonedDateTime datetimeInNashville  = datetimeInUTC.withZoneSameInstant(zoneId_local);
-        ZonedDateTime zdt = ZonedDateTime.of(datetimeInNashville.getYear(), datetimeInNashville.getMonthValue(), datetimeInNashville.getDayOfMonth(), 8, 0, 0, 0, zoneId_local);
+        ZonedDateTime zdt = ZonedDateTime.of(datetimeInNashville.getYear(), datetimeInNashville.getMonthValue(), datetimeInNashville.getDayOfMonth(), 7, 0, 0, 0, zoneId_local);
 
         // zdt_manually_set = datetimeInNashville;
         log.debug("log.debugdatetimeInUTC"+datetimeInUTC);

@@ -1,0 +1,28 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "layout_user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "customlayout"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "timestamp",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "changelogDate": "20171127012610",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "customlayout",
+    "pagination": "no"
+}

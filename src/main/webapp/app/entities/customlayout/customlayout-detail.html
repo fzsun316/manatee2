@@ -1,0 +1,31 @@
+
+<div>
+    <h2><span>Customlayout</span> {{vm.customlayout.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Title</span></dt>
+        <dd>
+            <span>{{vm.customlayout.title}}</span>
+        </dd>
+        <dt><span>Timestamp</span></dt>
+        <dd>
+            <span>{{vm.customlayout.timestamp | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span>Layout User</span></dt>
+        <dd>
+            {{vm.customlayout.layout_user.login}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="customlayout-detail.edit({id:vm.customlayout.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Edit</span>
+    </button>
+</div>
